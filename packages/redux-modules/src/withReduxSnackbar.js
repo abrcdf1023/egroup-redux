@@ -22,7 +22,7 @@ const withReduxSnackbar = name => Snackbar => {
   }
 
   const mapStateToProps = (state, props) => ({
-    ...getRootStates(state, props, name)
+    ...getRootStates(state, props, name).toJS()
   });
 
   return connect(

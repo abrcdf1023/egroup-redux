@@ -1,9 +1,28 @@
+import { createAction, handleActions } from 'redux-actions';
+import { createSelector } from 'reselect';
 import { fromJS, List } from 'immutable';
-import { handleActions } from 'redux-actions';
-import { SET_ENTITIES } from './types';
 
 const isList = List.isList;
-const reducer = handleActions(
+
+/**
+ * Types
+ */
+export const SET_ENTITIES = 'SET_ENTITIES';
+
+/**
+ * Actions
+ */
+export const setEntities = createAction(SET_ENTITIES);
+
+/**
+ * Selectors
+ */
+export const getEntities = state => state.get('entities');
+
+/**
+ * Reducer
+ */
+export const reducer = handleActions(
   {
     [SET_ENTITIES]: (state, action) => {
       if (action.payload) {
@@ -19,5 +38,3 @@ const reducer = handleActions(
   },
   fromJS({})
 );
-
-export default reducer;

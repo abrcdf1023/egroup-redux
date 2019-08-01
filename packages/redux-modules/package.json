@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "private": false,
   "dependencies": {
+    "immutable": "^4.0.0-rc.12",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "redux-actions": "^2.6.5",
+    "reselect": "^4.0.0"
   },
   "scripts": {
     "test": "jest",

@@ -13,7 +13,7 @@ const withReduxSnackbar = name => Snackbar => {
       return (
         <Snackbar
           handleClose={() => {
-            closeSnackbar(name);
+            this.props.closeSnackbar(name);
           }}
           {...other}
         />

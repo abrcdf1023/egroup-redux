@@ -13,7 +13,7 @@ const withReduxDialog = name => Dialog => {
       return (
         <Dialog
           handleClose={() => {
-            closeDialog(name);
+            this.props.closeDialog(name);
           }}
           {...other}
         />

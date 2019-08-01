@@ -1,0 +1,49 @@
+{
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/runtime": "^7.4.5",
+    "babel-eslint": "9.x",
+    "babel-loader": "^8.0.6",
+    "eslint": "5.x",
+    "eslint-config-react-app": "^4.0.1",
+    "eslint-plugin-flowtype": "2.x",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-jsx-a11y": "6.x",
+    "eslint-plugin-react": "7.x",
+    "eslint-plugin-react-hooks": "1.5.0",
+    "husky": "^2.4.0",
+    "jest": "^24.8.0",
+    "lerna": "^3.15.0",
+    "lint-staged": "^8.2.0",
+    "prettier": "^1.18.2"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:dev": "jest --watch",
+    "build": "lerna run build",
+    "release": "lerna publish --contents build",
+    "generate-changelog": "github_changelog_generator -u abrcdf1023 -p egroup-redux"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "packages/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

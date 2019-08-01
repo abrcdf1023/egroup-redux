@@ -1,9 +1,12 @@
-module.exports = function (api) {
-  if (api.env(["test"])) {
+module.exports = function(api) {
+  if (api.env(['test'])) {
     return {
-      presets: ['@babel/preset-env'],
-      plugins: ['@babel/plugin-transform-runtime']
-    }
+      presets: ['@babel/preset-env', '@babel/preset-react'],
+      plugins: [
+        '@babel/plugin-transform-runtime',
+        '@babel/plugin-proposal-class-properties'
+      ]
+    };
   }
 
   return {
@@ -15,10 +18,13 @@ module.exports = function (api) {
           useBuiltIns: 'entry',
           // use ES6 module
           modules: false
-        },
+        }
       ],
+      '@babel/preset-react'
     ],
     plugins: [
+      '@babel/plugin-proposal-class-properties',
+      '@babel/plugin-syntax-dynamic-import',
       // A plugin that enables the re-use of Babel's injected helper code to save on codesize.
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
       [
@@ -31,5 +37,5 @@ module.exports = function (api) {
     ignore: [
       "**/*.test.js"
     ]
-  }
-}
+  };
+};

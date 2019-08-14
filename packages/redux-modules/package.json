@@ -2,12 +2,6 @@
   "name": "@e-group/redux-modules",
   "version": "1.1.3",
   "private": false,
-  "dependencies": {
-    "immutable": "^4.0.0-rc.12",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "redux-actions": "^2.6.5"
-  },
   "scripts": {
     "test": "jest",
     "clean": "rimraf build",
@@ -24,5 +18,12 @@
   "devDependencies": {
     "rimraf": "^2.6.3"
   },
-  "gitHead": "962c60a7aa37f395e04272ef4ad417cd8fb6af15"
+  "gitHead": "962c60a7aa37f395e04272ef4ad417cd8fb6af15",
+  "peerDependencies": {
+    "immutable": "^4.0.0-rc.12",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "redux-actions": "^2.6.5"
+  }
 }

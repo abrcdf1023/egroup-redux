@@ -1,5 +1,4 @@
 import { createAction, handleActions } from 'redux-actions';
-import { createSelector } from 'reselect';
 import { fromJS, Map } from 'immutable';
 
 /**

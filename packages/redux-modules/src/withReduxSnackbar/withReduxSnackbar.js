@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getRootStates, initializeSnackbar, closeSnackbar } from './snackbars';
+import { getRootStates, initializeSnackbar, closeSnackbar } from '../snackbars';
 
 const withReduxSnackbar = name => Snackbar => {
   class ReduxSnackbar extends Component {

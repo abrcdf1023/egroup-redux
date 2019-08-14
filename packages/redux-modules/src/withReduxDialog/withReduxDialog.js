@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getRootStates, initializeDialog, closeDialog } from './dialogs';
+import { getRootStates, initializeDialog, closeDialog } from '../dialogs';
 
 const withReduxDialog = name => Dialog => {
   class ReduxDialog extends Component {

@@ -1,6 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { createSelector } from 'reselect';
-import { fromJS, Map } from 'immutable';
+import { Map } from 'immutable';
 
 /**
  * Types
@@ -33,7 +32,7 @@ export const reducer = handleActions(
       if (action.payload) {
         return state.set(
           action.payload,
-          fromJS({
+          Map({
             isOpen: false
           })
         );
@@ -60,5 +59,5 @@ export const reducer = handleActions(
       return state;
     }
   },
-  fromJS({})
+  Map()
 );

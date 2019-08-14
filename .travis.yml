@@ -4,7 +4,7 @@ language:
 node_js:
   - "lts/*"
 env:
-  - CODECOV_TOKEN="963e67b7-bc01-476b-9a90-4bf55ea96365"
+  - CODECOV_TOKEN="1cf7814b-a6b1-458f-a301-87781f2bc1ce"
 install:
   - npm install -g codecov
 script:

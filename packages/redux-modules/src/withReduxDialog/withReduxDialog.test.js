@@ -36,10 +36,8 @@ describe('Redux Dialog HOC', () => {
   });
   it('Should render the component only when dialog prop is true', () => {
     const ReduxDialog = withReduxDialog(dialogName)(MockDialog);
-    const { container, getByText } = render(<ReduxDialog store={store} />);
+    const { getByText } = render(<ReduxDialog store={store} />);
     expect(getByText('dialog title')).toBeInTheDocument();
     expect(getByText('dialog message')).toBeInTheDocument();
-
-    expect(container).toMatchSnapshot();
   });
 });

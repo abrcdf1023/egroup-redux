@@ -1,4 +1,11 @@
-import { egApiTake } from '../apis';
+import findIndex from 'lodash/findIndex';
+import {
+  egApiTake,
+  egApiRequest,
+  egApiCancel,
+  egApiSuccess,
+  egApiFailure
+} from '../apis';
 
 function camalize(str) {
   return str
@@ -6,26 +13,30 @@ function camalize(str) {
     .replace(/[^a-zA-Z0-9/]+(.)/g, (m, chr) => chr.toUpperCase());
 }
 
-function getApiInfos(leafs) {
+function getApiInfos(api) {
   let apiMethod;
   let apiType;
-  for (let i = 0; i < leafs.length; i++) {
-    const el = leafs[i];
-    if (el.indexOf('fetch') !== -1) {
-      const array = el.split(/(?=[A-Z])/);
-      apiMethod = array[1];
-      apiType = array[array.length - 1];
-      if (
-        apiType !== 'request' ||
-        apiType !== 'cancel' ||
-        apiType !== 'success' ||
-        apiType !== 'failure'
-      ) {
-        apiType = undefined;
-      }
-    }
+  const array = api.split(/(?=[A-Z])/);
+  apiMethod = array[1];
+  apiType = array[array.length - 1].toLowerCase();
+  if (
+    apiType !== 'request' &&
+    apiType !== 'cancel' &&
+    apiType !== 'success' &&
+    apiType !== 'failure'
+  ) {
+    apiType = undefined;
   }
   return [apiMethod, apiType];
+}
+
+function trimLeafs(leafs, fetchIndex) {
+  const trimedLeafs = [...leafs];
+  trimedLeafs[fetchIndex] = trimedLeafs[fetchIndex].replace(
+    /Request|Cancel|Success|Failure/,
+    ''
+  );
+  return trimedLeafs;
 }
 
 function createHandleApisMiddleware() {
@@ -33,9 +44,33 @@ function createHandleApisMiddleware() {
     const fetchIndex = action.type.indexOf('FETCH');
     if (fetchIndex !== -1) {
       const leafs = camalize(action.type).split('/');
-      const [apiMethod, apiType] = getApiInfos(leafs);
+      const apiIndex = findIndex(leafs, el => el.indexOf('fetch') !== -1);
+      const [apiMethod, apiType] = getApiInfos(leafs[apiIndex]);
+      const trimedLeafs = trimLeafs(leafs, apiIndex);
       if (!apiType) {
-        dispatch(egApiTake(leafs));
+        return next(egApiTake({ leafs: trimedLeafs }));
+      }
+      if (apiType === 'request') {
+        return next(egApiRequest({ leafs: trimedLeafs }));
+      }
+      if (apiType === 'cancel') {
+        return next(egApiCancel({ leafs: trimedLeafs }));
+      }
+      if (apiType === 'success') {
+        return next(
+          egApiSuccess({
+            leafs: trimedLeafs,
+            response: action.payload
+          })
+        );
+      }
+      if (apiType === 'failure') {
+        return next(
+          egApiFailure({
+            leafs: trimedLeafs,
+            error: action.payload
+          })
+        );
       }
     }
     return next(action);

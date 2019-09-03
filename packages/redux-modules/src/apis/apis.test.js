@@ -1,12 +1,31 @@
 import { fromJS } from 'immutable';
-import { INIT_API, initApi, reducer } from './apis';
+import {
+  EG_API_TAKE,
+  EG_API_REQUEST,
+  EG_API_CANCEL,
+  EG_API_SUCCESS,
+  EG_API_FAILURE,
+  egApiTake,
+  egApiRequest,
+  egApiCancel,
+  egApiSuccess,
+  egApiFailure,
+  reducer
+} from './apis';
 
 describe('api actions', () => {
-  it('should create an action to initialize api', () => {
+  it('should create an action to take api', () => {
     const expectedAction = {
-      type: INIT_API
+      type: EG_API_TAKE
     };
-    expect(initApi()).toEqual(expectedAction);
+    expect(egApiTake()).toEqual(expectedAction);
+  });
+
+  it('should create an action to request api', () => {
+    const expectedAction = {
+      type: EG_API_REQUEST
+    };
+    expect(egApiRequest()).toEqual(expectedAction);
   });
 });
 
@@ -15,18 +34,17 @@ describe('api reducers', () => {
     expect(reducer(undefined, {})).toEqual(fromJS({}));
   });
 
-  it('should handle INIT_API', () => {
+  it('should handle EG_API_TAKE', () => {
     const leafs = ['components', 'list', 'fetchGetMember'];
     const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
-            isLoading: false,
             isError: false
           }
         }
       }
     });
-    expect(reducer(fromJS({}), initApi(leafs))).toEqual(expectedState);
+    expect(reducer(fromJS({}), egApiTake(leafs))).toEqual(expectedState);
   });
 });

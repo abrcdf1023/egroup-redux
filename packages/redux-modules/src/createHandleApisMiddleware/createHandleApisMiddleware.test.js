@@ -33,7 +33,7 @@ const FETCH_GET_MEMBER_CANCEL = fetchGetMemberCancel().type;
 const FETCH_GET_MEMBER_SUCCESS = fetchGetMemberSuccess().type;
 const FETCH_GET_MEMBER_FAILURE = fetchGetMemberFailure().type;
 
-it('should dispatch initApi automatically.', () => {
+it('should dispatch egApiTake automatically.', () => {
   store.dispatch({
     type: FETCH_GET_MEMBER
   });
@@ -41,7 +41,6 @@ it('should dispatch initApi automatically.', () => {
     components: {
       list: {
         fetchGetMember: {
-          isLoading: false,
           isError: false
         }
       }

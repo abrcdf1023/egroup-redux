@@ -1,4 +1,4 @@
-import { initApi } from '../apis';
+import { egApiTake } from '../apis';
 
 function camalize(str) {
   return str
@@ -11,15 +11,15 @@ function getApiInfos(leafs) {
   let apiType;
   for (let i = 0; i < leafs.length; i++) {
     const el = leafs[i];
-    if (el.indexOf('FETCH') !== -1) {
-      const array = el.split('_');
+    if (el.indexOf('fetch') !== -1) {
+      const array = el.split(/(?=[A-Z])/);
       apiMethod = array[1];
       apiType = array[array.length - 1];
       if (
-        apiType !== 'REQUEST' ||
-        apiType !== 'CANCEL' ||
-        apiType !== 'SUCCESS' ||
-        apiType !== 'FAILURE'
+        apiType !== 'request' ||
+        apiType !== 'cancel' ||
+        apiType !== 'success' ||
+        apiType !== 'failure'
       ) {
         apiType = undefined;
       }
@@ -34,7 +34,9 @@ function createHandleApisMiddleware() {
     if (fetchIndex !== -1) {
       const leafs = camalize(action.type).split('/');
       const [apiMethod, apiType] = getApiInfos(leafs);
-      dispatch(initApi(leafs));
+      if (!apiType) {
+        dispatch(egApiTake(leafs));
+      }
     }
     return next(action);
   };

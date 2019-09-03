@@ -29,17 +29,33 @@ export const egApiFailure = createAction(EG_API_FAILURE);
 export const reducer = handleActions(
   {
     [EG_API_TAKE]: (state, action) =>
-      state.setIn([...action.payload, 'isError'], false),
+      state.setIn([...action.payload.leafs, 'isError'], false),
     [EG_API_REQUEST]: (state, action) =>
-      state.setIn([...action.payload, 'isLoading'], true),
+      state.setIn([...action.payload.leafs, 'isLoading'], true),
     [EG_API_CANCEL]: (state, action) =>
-      state.setIn([...action.payload, 'isLoading'], false),
+      state.setIn([...action.payload.leafs, 'isLoading'], false),
     [EG_API_SUCCESS]: (state, action) => {
-      let newState = state
-        .set('isLoading', false)
-        .set('latestUpdated', new Date().getTime());
+      let newState = state.setIn([...action.payload.leafs, 'isLoading'], false);
 
-      return state.setIn([...action.payload, 'isLoading'], false);
+      if (action.payload.response) {
+        newState = newState.setIn(
+          [...action.payload.leafs, 'response'],
+          action.payload.response
+        );
+      }
+
+      return newState;
+    },
+    [EG_API_FAILURE]: (state, action) => {
+      let newState = state.setIn([...action.payload.leafs, 'isLoading'], false);
+      newState = newState.setIn([...action.payload.leafs, 'isError'], true);
+      if (action.payload.error) {
+        newState = newState.setIn(
+          [...action.payload.leafs, 'error'],
+          action.payload.error
+        );
+      }
+      return newState;
     }
   },
   Map()

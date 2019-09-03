@@ -15,7 +15,7 @@ import {
 
 const leafs = ['components', 'list', 'fetchGetMember'];
 
-describe('api actions', () => {
+describe('apis module actions', () => {
   it('should create an action to take api', () => {
     const expectedAction = {
       type: EG_API_TAKE,
@@ -77,7 +77,7 @@ describe('api actions', () => {
   });
 });
 
-describe('api reducers', () => {
+describe('apis module reducers', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(fromJS({}));
   });

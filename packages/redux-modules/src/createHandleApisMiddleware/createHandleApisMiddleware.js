@@ -48,16 +48,16 @@ function createHandleApisMiddleware() {
       const [apiMethod, apiType] = getApiInfos(leafs[apiIndex]);
       const trimedLeafs = trimLeafs(leafs, apiIndex);
       if (!apiType) {
-        return next(egApiTake({ leafs: trimedLeafs }));
+        dispatch(egApiTake({ leafs: trimedLeafs }));
       }
       if (apiType === 'request') {
-        return next(egApiRequest({ leafs: trimedLeafs }));
+        dispatch(egApiRequest({ leafs: trimedLeafs }));
       }
       if (apiType === 'cancel') {
-        return next(egApiCancel({ leafs: trimedLeafs }));
+        dispatch(egApiCancel({ leafs: trimedLeafs }));
       }
       if (apiType === 'success') {
-        return next(
+        dispatch(
           egApiSuccess({
             leafs: trimedLeafs,
             response: action.payload
@@ -65,7 +65,7 @@ function createHandleApisMiddleware() {
         );
       }
       if (apiType === 'failure') {
-        return next(
+        dispatch(
           egApiFailure({
             leafs: trimedLeafs,
             error: action.payload

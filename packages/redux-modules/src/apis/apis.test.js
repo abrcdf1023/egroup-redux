@@ -83,6 +83,7 @@ describe('apis module reducers', () => {
   });
 
   it('should handle EG_API_TAKE', () => {
+    const initialState = fromJS({});
     const expectedState = fromJS({
       components: {
         list: {
@@ -92,36 +93,71 @@ describe('apis module reducers', () => {
         }
       }
     });
-    expect(reducer(fromJS({}), egApiTake({ leafs }))).toEqual(expectedState);
+    expect(reducer(initialState, egApiTake({ leafs }))).toEqual(expectedState);
   });
 
   it('should handle EG_API_REQUEST', () => {
+    const initialState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false
+          }
+        }
+      }
+    });
     const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
+            isError: false,
             isLoading: true
           }
         }
       }
     });
-    expect(reducer(fromJS({}), egApiRequest({ leafs }))).toEqual(expectedState);
+    expect(reducer(initialState, egApiRequest({ leafs }))).toEqual(
+      expectedState
+    );
   });
 
   it('should handle EG_API_CANCEL', () => {
+    const initialState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: true
+          }
+        }
+      }
+    });
     const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
+            isError: false,
             isLoading: false
           }
         }
       }
     });
-    expect(reducer(fromJS({}), egApiCancel({ leafs }))).toEqual(expectedState);
+    expect(reducer(initialState, egApiCancel({ leafs }))).toEqual(
+      expectedState
+    );
   });
 
   it('should handle EG_API_SUCCESS with response', () => {
+    const initialState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: true
+          }
+        }
+      }
+    });
     const response = fromJS({
       data: 'data'
     });
@@ -129,6 +165,7 @@ describe('apis module reducers', () => {
       components: {
         list: {
           fetchGetMember: {
+            isError: false,
             isLoading: false,
             response
           }
@@ -137,7 +174,7 @@ describe('apis module reducers', () => {
     });
     expect(
       reducer(
-        fromJS({}),
+        initialState,
         egApiSuccess({
           leafs,
           response
@@ -147,10 +184,21 @@ describe('apis module reducers', () => {
   });
 
   it('should handle EG_API_SUCCESS without response', () => {
+    const initialState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: true
+          }
+        }
+      }
+    });
     const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
+            isError: false,
             isLoading: false
           }
         }
@@ -158,7 +206,7 @@ describe('apis module reducers', () => {
     });
     expect(
       reducer(
-        fromJS({}),
+        initialState,
         egApiSuccess({
           leafs
         })
@@ -166,7 +214,17 @@ describe('apis module reducers', () => {
     ).toEqual(expectedState);
   });
 
-  it('should handle EG_API_FAILURE with error', () => {
+  it('should handle EG_API_FAILURE with error object', () => {
+    const initialState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: true
+          }
+        }
+      }
+    });
     const error = new Error();
     const expectedState = fromJS({
       components: {
@@ -181,7 +239,7 @@ describe('apis module reducers', () => {
     });
     expect(
       reducer(
-        fromJS({}),
+        initialState,
         egApiFailure({
           leafs,
           error
@@ -190,7 +248,17 @@ describe('apis module reducers', () => {
     ).toEqual(expectedState);
   });
 
-  it('should handle EG_API_FAILURE without error', () => {
+  it('should handle EG_API_FAILURE without error object', () => {
+    const initialState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: true
+          }
+        }
+      }
+    });
     const expectedState = fromJS({
       components: {
         list: {
@@ -203,7 +271,7 @@ describe('apis module reducers', () => {
     });
     expect(
       reducer(
-        fromJS({}),
+        initialState,
         egApiFailure({
           leafs
         })

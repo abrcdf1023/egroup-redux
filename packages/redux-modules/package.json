@@ -1,6 +1,6 @@
 {
   "name": "@e-group/redux-modules",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "private": false,
   "scripts": {
     "test": "jest",

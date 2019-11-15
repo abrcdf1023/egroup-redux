@@ -6,39 +6,11 @@ import {
   egApiSuccess,
   egApiFailure
 } from '../apis';
+import { camalize, getApiInfos, trimLeafs } from './utils';
 
-function camalize(str) {
-  return str
-    .toLowerCase()
-    .replace(/[^a-zA-Z0-9/]+(.)/g, (m, chr) => chr.toUpperCase());
-}
-
-function getApiInfos(api) {
-  let apiMethod;
-  let apiType;
-  const array = api.split(/(?=[A-Z])/);
-  apiMethod = array[1];
-  apiType = array[array.length - 1].toLowerCase();
-  if (
-    apiType !== 'request' &&
-    apiType !== 'cancel' &&
-    apiType !== 'success' &&
-    apiType !== 'failure'
-  ) {
-    apiType = undefined;
-  }
-  return [apiMethod, apiType];
-}
-
-function trimLeafs(leafs, fetchIndex) {
-  const trimedLeafs = [...leafs];
-  trimedLeafs[fetchIndex] = trimedLeafs[fetchIndex].replace(
-    /Request|Cancel|Success|Failure/,
-    ''
-  );
-  return trimedLeafs;
-}
-
+/**
+ * Use to dispatch fetch actions automatically.
+ */
 function createHandleApisMiddleware() {
   return ({ dispatch, getState }) => next => action => {
     const fetchIndex = action.type.indexOf('FETCH');

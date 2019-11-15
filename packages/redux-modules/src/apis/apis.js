@@ -37,7 +37,7 @@ export const reducer = handleActions(
     [EG_API_SUCCESS]: (state, action) => {
       let newState = state.setIn([...action.payload.leafs, 'isLoading'], false);
 
-      if (action.payload.response) {
+      if (typeof action.payload.response !== 'undefined') {
         newState = newState.setIn(
           [...action.payload.leafs, 'response'],
           action.payload.response

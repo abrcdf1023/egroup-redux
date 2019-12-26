@@ -9,11 +9,16 @@ const withReduxDialog = name => Dialog => {
       this.props.initializeDialog(name);
     }
     render() {
-      const { initializeDialog, handleClose, ...other } = this.props;
+      const {
+        initializeDialog,
+        handleClose,
+        closeDialog,
+        ...other
+      } = this.props;
       return (
         <Dialog
           handleClose={() => {
-            this.props.closeDialog(name);
+            closeDialog(name);
           }}
           {...other}
         />

@@ -7,11 +7,13 @@ const isList = List.isList;
  * Types
  */
 export const SET_ENTITIES = 'SET_ENTITIES';
+export const SET_ENTITIES_SHALLOW = 'SET_ENTITIES_SHALLOW';
 
 /**
  * Actions
  */
 export const setEntities = createAction(SET_ENTITIES);
+export const setEntitiesShallow = createAction(SET_ENTITIES_SHALLOW);
 
 /**
  * Selectors
@@ -31,6 +33,12 @@ export const reducer = handleActions(
           }
           return b;
         }, action.payload);
+      }
+      return state;
+    },
+    [SET_ENTITIES_SHALLOW]: (state, action) => {
+      if (action.payload) {
+        return state.merge(action.payload);
       }
       return state;
     }

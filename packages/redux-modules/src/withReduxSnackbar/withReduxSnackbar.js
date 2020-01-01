@@ -9,7 +9,12 @@ const withReduxSnackbar = name => Snackbar => {
       this.props.initializeSnackbar(name);
     }
     render() {
-      const { initializeSnackbar, handleClose, ...other } = this.props;
+      const {
+        initializeSnackbar,
+        handleClose,
+        closeSnackbar,
+        ...other
+      } = this.props;
       return (
         <Snackbar
           handleClose={() => {

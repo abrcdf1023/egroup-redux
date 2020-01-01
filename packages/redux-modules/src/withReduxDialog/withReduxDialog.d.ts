@@ -6,7 +6,7 @@ interface ReduxDialogProps {
 }
 
 declare function withReduxDialog(
-  dialogName: string
+  name: string
 ): React.ComponentType<ReduxDialogProps>;
 
 export default withReduxDialog;

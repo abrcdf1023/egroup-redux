@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getRootStates, initializeDialog, closeDialog } from '../dialogs';
+import { getDialogStates, initializeDialog, closeDialog } from '../dialogs';
 
 const withReduxDialog = name => Dialog => {
   class ReduxDialog extends Component {
@@ -27,7 +27,7 @@ const withReduxDialog = name => Dialog => {
   }
 
   const mapStateToProps = (state, props) => ({
-    ...getRootStates(state, props, name).toJS()
+    ...getDialogStates(state, props, name).toJS()
   });
 
   return connect(

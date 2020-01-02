@@ -9,7 +9,7 @@ import {
   closeDialog,
   setDialogData,
   reducer,
-  getRootStates
+  getDialogStates
 } from './dialogs';
 
 const dialogName = 'alertAialog';
@@ -132,17 +132,25 @@ describe('dialog reducers', () => {
 });
 
 describe('dialog selectors', () => {
-  const rootStates = fromJS({
+  it('should get default dialog states when dialog is undefined.', () => {
+    expect(getDialogStates(fromJS({}), null, dialogName)).toEqual(
+      fromJS({
+        isOpen: false
+      })
+    );
+  });
+
+  const dialogStates = fromJS({
     isOpen: false,
     message: 'message',
     title: 'title'
   });
   const state = fromJS({
     dialogs: {
-      [dialogName]: rootStates
+      [dialogName]: dialogStates
     }
   });
-  it('should get dialog root states', () => {
-    expect(getRootStates(state, null, dialogName)).toEqual(rootStates);
+  it('should get dialog states by dialog name', () => {
+    expect(getDialogStates(state, null, dialogName)).toEqual(dialogStates);
   });
 });

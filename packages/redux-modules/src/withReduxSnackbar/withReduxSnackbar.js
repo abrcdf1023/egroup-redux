@@ -14,6 +14,7 @@ const withReduxSnackbar = name => Snackbar => {
     }
     render() {
       const {
+        forwardedRef,
         initializeSnackbar,
         handleClose,
         closeSnackbar,
@@ -21,6 +22,7 @@ const withReduxSnackbar = name => Snackbar => {
       } = this.props;
       return (
         <Snackbar
+          ref={forwardedRef}
           handleClose={() => {
             this.props.closeSnackbar(name);
           }}
@@ -29,6 +31,14 @@ const withReduxSnackbar = name => Snackbar => {
       );
     }
   }
+
+  /**
+   * Forwarding refs in higher-order components
+   * https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components
+   */
+  const ForwardedComponent = React.forwardRef((props, ref) => {
+    return <ReduxSnackbar {...props} forwardedRef={ref} />;
+  });
 
   const mapStateToProps = (state, props) => ({
     ...getSnackbarStates(state, props, name).toJS()
@@ -40,7 +50,7 @@ const withReduxSnackbar = name => Snackbar => {
       initializeSnackbar,
       closeSnackbar
     }
-  )(ReduxSnackbar);
+  )(ForwardedComponent);
 };
 
 export default withReduxSnackbar;

@@ -58,61 +58,58 @@ describe('dialog reducers', () => {
   });
 
   it('should handle INITIALIZE_DIALOG', () => {
-    expect(reducer(fromJS({}), initializeDialog(dialogName))).toEqual(
+    const state = fromJS({});
+    expect(reducer(state, initializeDialog(dialogName))).toEqual(
       fromJS({
         [dialogName]: {
           isOpen: false
         }
       })
     );
+    expect(reducer(state, initializeDialog())).toEqual(state);
   });
 
   it('should handle OPEN_DIALOG', () => {
-    expect(
-      reducer(
-        fromJS({
-          [dialogName]: {
-            isOpen: false
-          }
-        }),
-        openDialog(dialogName)
-      )
-    ).toEqual(
+    const state = fromJS({
+      [dialogName]: {
+        isOpen: false
+      }
+    });
+    expect(reducer(state, openDialog(dialogName))).toEqual(
       fromJS({
         [dialogName]: {
           isOpen: true
         }
       })
     );
+    expect(reducer(state, openDialog())).toEqual(state);
   });
 
   it('should handle CLOSE_DIALOG', () => {
-    expect(
-      reducer(
-        fromJS({
-          [dialogName]: {
-            isOpen: true
-          }
-        }),
-        closeDialog(dialogName)
-      )
-    ).toEqual(
+    const state = fromJS({
+      [dialogName]: {
+        isOpen: true
+      }
+    });
+    expect(reducer(state, closeDialog(dialogName))).toEqual(
       fromJS({
         [dialogName]: {
           isOpen: false
         }
       })
     );
+    expect(reducer(state, closeDialog())).toEqual(state);
   });
 
   it('should handle SET_DIALOG_DATA', () => {
+    const state = fromJS({
+      [dialogName]: {
+        isOpen: false
+      }
+    });
     expect(
       reducer(
-        fromJS({
-          [dialogName]: {
-            isOpen: false
-          }
-        }),
+        state,
         setDialogData({
           name: dialogName,
           message: 'message',
@@ -128,6 +125,7 @@ describe('dialog reducers', () => {
         }
       })
     );
+    expect(reducer(state, setDialogData())).toEqual(state);
   });
 });
 

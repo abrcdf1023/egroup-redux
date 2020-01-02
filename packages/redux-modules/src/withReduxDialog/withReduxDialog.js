@@ -10,6 +10,7 @@ const withReduxDialog = name => Dialog => {
     }
     render() {
       const {
+        forwardedRef,
         initializeDialog,
         handleClose,
         closeDialog,
@@ -17,6 +18,7 @@ const withReduxDialog = name => Dialog => {
       } = this.props;
       return (
         <Dialog
+          ref={forwardedRef}
           handleClose={() => {
             closeDialog(name);
           }}
@@ -25,6 +27,14 @@ const withReduxDialog = name => Dialog => {
       );
     }
   }
+
+  /**
+   * Forwarding refs in higher-order components
+   * https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components
+   */
+  const ForwardedComponent = React.forwardRef((props, ref) => {
+    return <ReduxDialog {...props} forwardedRef={ref} />;
+  });
 
   const mapStateToProps = (state, props) => ({
     ...getDialogStates(state, props, name).toJS()
@@ -36,7 +46,7 @@ const withReduxDialog = name => Dialog => {
       initializeDialog,
       closeDialog
     }
-  )(ReduxDialog);
+  )(ForwardedComponent);
 };
 
 export default withReduxDialog;

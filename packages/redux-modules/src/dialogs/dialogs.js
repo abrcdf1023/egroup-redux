@@ -21,7 +21,12 @@ export const setDialogData = createAction(SET_DIALOG_DATA);
  * Selectors
  */
 export const getRootStates = (state, props, dialogName) =>
-  state.getIn(['dialogs', dialogName], Map());
+  state.getIn(
+    ['dialogs', dialogName],
+    Map({
+      isOpen: false
+    })
+  );
 
 /**
  * Reducer

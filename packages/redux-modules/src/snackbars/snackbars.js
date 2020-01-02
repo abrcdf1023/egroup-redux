@@ -20,7 +20,7 @@ export const setSnackbarData = createAction(SET_SNACKBAR_DATA);
 /**
  * Selectors
  */
-export const getRootStates = (state, props, name) =>
+export const getSnackbarStates = (state, props, name) =>
   state.getIn(['snackbars', name], Map());
 
 /**

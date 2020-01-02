@@ -9,7 +9,7 @@ import {
   closeSnackbar,
   setSnackbarData,
   reducer,
-  getRootStates
+  getSnackbarStates
 } from './snackbars';
 
 const snackbarName = 'globalSnackbar';
@@ -132,17 +132,19 @@ describe('snackbar reducers', () => {
 });
 
 describe('snackbar selectors', () => {
-  const rootStates = fromJS({
+  const snackbarStates = fromJS({
     isOpen: false,
     message: 'message',
     title: 'title'
   });
   const state = fromJS({
     snackbars: {
-      [snackbarName]: rootStates
+      [snackbarName]: snackbarStates
     }
   });
-  it('should get snackbar root states', () => {
-    expect(getRootStates(state, null, snackbarName)).toEqual(rootStates);
+  it('should get snackbar states by snackbar name', () => {
+    expect(getSnackbarStates(state, null, snackbarName)).toEqual(
+      snackbarStates
+    );
   });
 });

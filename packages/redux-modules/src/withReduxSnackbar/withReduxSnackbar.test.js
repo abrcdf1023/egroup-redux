@@ -40,4 +40,10 @@ describe('Redux Snackbar HOC', () => {
     expect(getByText('snackbar title')).toBeInTheDocument();
     expect(getByText('snackbar message')).toBeInTheDocument();
   });
+  it('Should pass ref to Snackbar component', () => {
+    const ReduxSnackbar = withReduxSnackbar(snackbarName)(MockSnackbar);
+    const ref = React.createRef(null);
+    render(<ReduxSnackbar ref={ref} store={store} />);
+    expect(ref.current).not.toBeNull();
+  });
 });

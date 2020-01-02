@@ -9,14 +9,15 @@ import withReduxDialog from './withReduxDialog';
 let store;
 const dialogName = 'alertAialog';
 
-const MockDialog = ({ isOpen, handleClose, title, message }) => {
+const MockDialog = React.forwardRef(function MockDialog(props, ref) {
+  const { isOpen, handleClose, title, message } = props;
   return (
-    <div>
+    <div ref={ref}>
       <p>{title}</p>
       <p>{message}</p>
     </div>
   );
-};
+});
 
 describe('Redux Dialog HOC', () => {
   beforeEach(() => {
@@ -39,5 +40,11 @@ describe('Redux Dialog HOC', () => {
     const { getByText } = render(<ReduxDialog store={store} />);
     expect(getByText('dialog title')).toBeInTheDocument();
     expect(getByText('dialog message')).toBeInTheDocument();
+  });
+  it('Should pass ref to Dialog component', () => {
+    const ReduxDialog = withReduxDialog(dialogName)(MockDialog);
+    const ref = React.createRef(null);
+    render(<ReduxDialog ref={ref} store={store} />);
+    expect(ref.current).not.toBeNull();
   });
 });

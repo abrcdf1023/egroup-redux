@@ -58,61 +58,58 @@ describe('snackbar reducers', () => {
   });
 
   it('should handle INITIALIZE_SNACKBAR', () => {
-    expect(reducer(fromJS({}), initializeSnackbar(snackbarName))).toEqual(
+    const state = fromJS({});
+    expect(reducer(state, initializeSnackbar(snackbarName))).toEqual(
       fromJS({
         [snackbarName]: {
           isOpen: false
         }
       })
     );
+    expect(reducer(state, initializeSnackbar())).toEqual(state);
   });
 
   it('should handle OPEN_SNACKBAR', () => {
-    expect(
-      reducer(
-        fromJS({
-          [snackbarName]: {
-            isOpen: false
-          }
-        }),
-        openSnackbar(snackbarName)
-      )
-    ).toEqual(
+    const state = fromJS({
+      [snackbarName]: {
+        isOpen: false
+      }
+    });
+    expect(reducer(state, openSnackbar(snackbarName))).toEqual(
       fromJS({
         [snackbarName]: {
           isOpen: true
         }
       })
     );
+    expect(reducer(state, openSnackbar())).toEqual(state);
   });
 
   it('should handle CLOSE_SNACKBAR', () => {
-    expect(
-      reducer(
-        fromJS({
-          [snackbarName]: {
-            isOpen: true
-          }
-        }),
-        closeSnackbar(snackbarName)
-      )
-    ).toEqual(
+    const state = fromJS({
+      [snackbarName]: {
+        isOpen: true
+      }
+    });
+    expect(reducer(state, closeSnackbar(snackbarName))).toEqual(
       fromJS({
         [snackbarName]: {
           isOpen: false
         }
       })
     );
+    expect(reducer(state, closeSnackbar())).toEqual(state);
   });
 
   it('should handle SET_SNACKBAR_DATA', () => {
+    const state = fromJS({
+      [snackbarName]: {
+        isOpen: false
+      }
+    });
     expect(
       reducer(
-        fromJS({
-          [snackbarName]: {
-            isOpen: false
-          }
-        }),
+        state,
         setSnackbarData({
           name: snackbarName,
           message: 'message',
@@ -128,6 +125,7 @@ describe('snackbar reducers', () => {
         }
       })
     );
+    expect(reducer(state, setSnackbarData())).toEqual(state);
   });
 });
 

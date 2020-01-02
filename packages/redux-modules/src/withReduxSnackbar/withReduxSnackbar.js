@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import {
@@ -8,7 +8,7 @@ import {
 } from '../snackbars';
 
 const withReduxSnackbar = name => Snackbar => {
-  class ReduxSnackbar extends Component {
+  class ReduxSnackbar extends React.Component {
     componentDidMount() {
       this.props.initializeSnackbar(name);
     }
@@ -36,9 +36,15 @@ const withReduxSnackbar = name => Snackbar => {
    * Forwarding refs in higher-order components
    * https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components
    */
-  const ForwardedComponent = React.forwardRef((props, ref) => {
+  function forwardRef(props, ref) {
     return <ReduxSnackbar {...props} forwardedRef={ref} />;
-  });
+  }
+
+  // Give this component a more helpful display name in DevTools.
+  const snackbarComponentName = Snackbar.displayName || Snackbar.name;
+  forwardRef.displayName = `withReduxSnackbar(${snackbarComponentName})`;
+
+  const ForwardedComponent = React.forwardRef(forwardRef);
 
   const mapStateToProps = (state, props) => ({
     ...getSnackbarStates(state, props, name).toJS()

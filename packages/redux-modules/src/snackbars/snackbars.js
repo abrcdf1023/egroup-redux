@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { fromJS, Map } from 'immutable';
+import { Map, isImmutable } from 'immutable';
 
 /**
  * Types
@@ -30,12 +30,14 @@ export const reducer = handleActions(
   {
     [INITIALIZE_SNACKBAR]: (state, action) => {
       if (action.payload) {
-        return state.set(
-          action.payload,
-          fromJS({
+        return state.update(action.payload, snackbarState => {
+          if (isImmutable(snackbarState)) {
+            return snackbarState;
+          }
+          return Map({
             isOpen: false
-          })
-        );
+          });
+        });
       }
       return state;
     },
@@ -59,5 +61,5 @@ export const reducer = handleActions(
       return state;
     }
   },
-  fromJS({})
+  Map()
 );

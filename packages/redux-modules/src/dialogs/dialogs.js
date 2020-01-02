@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { Map } from 'immutable';
+import { Map, isImmutable } from 'immutable';
 
 /**
  * Types
@@ -35,12 +35,14 @@ export const reducer = handleActions(
   {
     [INITIALIZE_DIALOG]: (state, action) => {
       if (action.payload) {
-        return state.set(
-          action.payload,
-          Map({
+        return state.update(action.payload, dialogState => {
+          if (isImmutable(dialogState)) {
+            return dialogState;
+          }
+          return Map({
             isOpen: false
-          })
-        );
+          });
+        });
       }
       return state;
     },

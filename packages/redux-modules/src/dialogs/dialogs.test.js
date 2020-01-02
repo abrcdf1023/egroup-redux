@@ -59,14 +59,18 @@ describe('dialog reducers', () => {
 
   it('should handle INITIALIZE_DIALOG', () => {
     const state = fromJS({});
+    const initializeState = fromJS({
+      [dialogName]: {
+        isOpen: false
+      }
+    });
     expect(reducer(state, initializeDialog(dialogName))).toEqual(
-      fromJS({
-        [dialogName]: {
-          isOpen: false
-        }
-      })
+      initializeState
     );
     expect(reducer(state, initializeDialog())).toEqual(state);
+    expect(reducer(initializeState, initializeDialog(dialogName))).toEqual(
+      initializeState
+    );
   });
 
   it('should handle OPEN_DIALOG', () => {

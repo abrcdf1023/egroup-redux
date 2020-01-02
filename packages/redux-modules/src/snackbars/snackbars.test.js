@@ -59,14 +59,18 @@ describe('snackbar reducers', () => {
 
   it('should handle INITIALIZE_SNACKBAR', () => {
     const state = fromJS({});
+    const initializeState = fromJS({
+      [snackbarName]: {
+        isOpen: false
+      }
+    });
     expect(reducer(state, initializeSnackbar(snackbarName))).toEqual(
-      fromJS({
-        [snackbarName]: {
-          isOpen: false
-        }
-      })
+      initializeState
     );
     expect(reducer(state, initializeSnackbar())).toEqual(state);
+    expect(reducer(initializeState, initializeSnackbar(snackbarName))).toEqual(
+      initializeState
+    );
   });
 
   it('should handle OPEN_SNACKBAR', () => {

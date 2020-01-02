@@ -33,30 +33,34 @@ const withReduxSnackbar = name => Snackbar => {
   }
 
   /**
+   * Connect before forwardRef
+   * https://github.com/reduxjs/react-redux/issues/914
+   */
+  const mapStateToProps = (state, props) => ({
+    ...getSnackbarStates(state, props, name).toJS()
+  });
+
+  const ConnectedComponent = connect(
+    mapStateToProps,
+    {
+      initializeSnackbar,
+      closeSnackbar
+    }
+  )(ReduxSnackbar);
+
+  /**
    * Forwarding refs in higher-order components
    * https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components
    */
   function forwardRef(props, ref) {
-    return <ReduxSnackbar {...props} forwardedRef={ref} />;
+    return <ConnectedComponent {...props} forwardedRef={ref} />;
   }
 
   // Give this component a more helpful display name in DevTools.
   const snackbarComponentName = Snackbar.displayName || Snackbar.name;
   forwardRef.displayName = `withReduxSnackbar(${snackbarComponentName})`;
 
-  const ForwardedComponent = React.forwardRef(forwardRef);
-
-  const mapStateToProps = (state, props) => ({
-    ...getSnackbarStates(state, props, name).toJS()
-  });
-
-  return connect(
-    mapStateToProps,
-    {
-      initializeSnackbar,
-      closeSnackbar
-    }
-  )(ForwardedComponent);
+  return React.forwardRef(forwardRef);
 };
 
 export default withReduxSnackbar;

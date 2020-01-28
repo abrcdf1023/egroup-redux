@@ -16,7 +16,7 @@
   "author": "JerryP <egroup.jerrylee@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "rimraf": "^2.6.3"
+    "rimraf": "^3.0.1"
   },
   "gitHead": "962c60a7aa37f395e04272ef4ad417cd8fb6af15",
   "peerDependencies": {

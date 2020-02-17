@@ -13,8 +13,7 @@ import { camalize, getApiInfos, trimLeafs } from './utils';
  */
 function createHandleApisMiddleware() {
   return ({ dispatch, getState }) => next => action => {
-    const fetchIndex = action.type.indexOf('FETCH');
-    if (fetchIndex !== -1) {
+    if (action.type.indexOf('FETCH') !== -1) {
       const leafs = camalize(action.type).split('/');
       const apiIndex = findIndex(leafs, el => el.indexOf('fetch') !== -1);
       const [apiMethod, apiType] = getApiInfos(leafs[apiIndex]);

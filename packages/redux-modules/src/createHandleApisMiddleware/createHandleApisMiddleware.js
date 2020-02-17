@@ -6,7 +6,7 @@ import {
   egApiSuccess,
   egApiFailure
 } from '../apis';
-import { camalize, getApiInfos, trimLeafs } from './utils';
+import { camalize, getApiInfos, trimLeafs } from '../utils';
 
 /**
  * Use to dispatch fetch actions automatically.

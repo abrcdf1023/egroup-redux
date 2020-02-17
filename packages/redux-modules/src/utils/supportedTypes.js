@@ -1,0 +1,18 @@
+export default function supportedTypes(variable, supportedTypes) {
+  let type = typeof variable;
+  if (type === 'object') {
+    if (variable === null) {
+      type = 'null';
+    }
+    if (Array.isArray(variable)) {
+      type = 'array';
+    }
+  }
+  let isSupported = false;
+  supportedTypes.forEach(supportedType => {
+    if (type === supportedType) {
+      isSupported = true;
+    }
+  });
+  return [isSupported, type];
+}

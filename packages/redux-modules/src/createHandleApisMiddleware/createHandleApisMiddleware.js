@@ -14,9 +14,9 @@ function createHandleApisMiddleware() {
   return ({ dispatch, getState }) => next => action => {
     if (action.type.indexOf('FETCH') !== -1) {
       const leafs = camalize(action.type).split('/');
-      const apiIndex = findFetchIndex(leafs);
-      const [apiMethod, apiType] = getApiInfos(leafs[apiIndex]);
-      const trimedLeafs = trimLeafs(leafs, apiIndex);
+      const fetchIndex = findFetchIndex(leafs);
+      const [apiMethod, apiType] = getApiInfos(leafs[fetchIndex]);
+      const trimedLeafs = trimLeafs(leafs, fetchIndex);
       if (!apiType) {
         dispatch(egApiTake({ leafs: trimedLeafs }));
       }

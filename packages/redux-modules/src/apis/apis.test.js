@@ -1,3 +1,4 @@
+import { createAction } from 'redux-actions';
 import { fromJS } from 'immutable';
 import {
   EG_API_TAKE,
@@ -5,11 +6,15 @@ import {
   EG_API_CANCEL,
   EG_API_SUCCESS,
   EG_API_FAILURE,
+  EG_CLEAR_API_RESPONSE,
+  EG_CLEAR_API_RESPONSES,
   egApiTake,
   egApiRequest,
   egApiCancel,
   egApiSuccess,
   egApiFailure,
+  clearApiResponse,
+  clearApiResponses,
   reducer
 } from './apis';
 
@@ -74,6 +79,29 @@ describe('apis module actions', () => {
       payload: { leafs }
     };
     expect(egApiFailure({ leafs })).toEqual(expectedAction);
+  });
+
+  it('should create an action to clear single api response', () => {
+    const fetchGetMember = createAction('FETCH_GET_MEMBER');
+    // single
+    const expectedAction = {
+      type: EG_CLEAR_API_RESPONSE,
+      payload: fetchGetMember()
+    };
+    expect(clearApiResponse(fetchGetMember())).toEqual(expectedAction);
+  });
+
+  it('should create an action to clear multiple api response', () => {
+    const fetchGetMember = createAction('FETCH_GET_MEMBER');
+    const fetchGetUser = createAction('FETCH_GET_USER');
+    // multiple
+    const expectedAction = {
+      type: EG_CLEAR_API_RESPONSES,
+      payload: [fetchGetMember(), fetchGetUser()]
+    };
+    expect(clearApiResponses([fetchGetMember(), fetchGetUser()])).toEqual(
+      expectedAction
+    );
   });
 });
 
@@ -277,5 +305,144 @@ describe('apis module reducers', () => {
         })
       )
     ).toEqual(expectedState);
+  });
+
+  it('should handle EG_CLEAR_API_RESPONSE with single action', () => {
+    const fetchGetMember = createAction('COMPONENTS/LIST/FETCH_GET_MEMBER');
+    const initialState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: false,
+            response: {
+              data: 'data'
+            }
+          }
+        },
+        user: {
+          fetchGetUser: {
+            isError: false,
+            isLoading: false,
+            response: {
+              data: 'data'
+            }
+          }
+        }
+      }
+    });
+    const expectedState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: false
+          }
+        },
+        user: {
+          fetchGetUser: {
+            isError: false,
+            isLoading: false,
+            response: {
+              data: 'data'
+            }
+          }
+        }
+      }
+    });
+    expect(reducer(initialState, clearApiResponse(fetchGetMember()))).toEqual(
+      expectedState
+    );
+  });
+
+  it('should handle EG_CLEAR_API_RESPONSE without any change', () => {
+    const fetchGetMember = () => ({});
+    const initialState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: false,
+            response: {
+              data: 'data'
+            }
+          }
+        }
+      }
+    });
+    expect(reducer(initialState, clearApiResponse())).toEqual(initialState);
+    expect(reducer(initialState, clearApiResponse(fetchGetMember()))).toEqual(
+      initialState
+    );
+  });
+
+  it('should handle EG_CLEAR_API_RESPONSES with multiple actions', () => {
+    const fetchGetMember = createAction('COMPONENTS/LIST/FETCH_GET_MEMBER');
+    const fetchGetUser = createAction('COMPONENTS/USERS/FETCH_GET_USER');
+    const initialState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: false,
+            response: {
+              data: 'data'
+            }
+          }
+        },
+        users: {
+          fetchGetUser: {
+            isError: false,
+            isLoading: false,
+            response: {
+              data: 'data'
+            }
+          }
+        }
+      }
+    });
+    const expectedState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: false
+          }
+        },
+        users: {
+          fetchGetUser: {
+            isError: false,
+            isLoading: false
+          }
+        }
+      }
+    });
+    expect(
+      reducer(
+        initialState,
+        clearApiResponses([fetchGetMember(), fetchGetUser()])
+      )
+    ).toEqual(expectedState);
+  });
+
+  it('should handle EG_CLEAR_API_RESPONSES without any change', () => {
+    const fetchGetMember = () => ({});
+    const initialState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: false,
+            response: {
+              data: 'data'
+            }
+          }
+        }
+      }
+    });
+    expect(reducer(initialState, clearApiResponses())).toEqual(initialState);
+    expect(
+      reducer(initialState, clearApiResponses([fetchGetMember()]))
+    ).toEqual(initialState);
   });
 });

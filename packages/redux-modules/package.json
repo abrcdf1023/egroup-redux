@@ -2,6 +2,22 @@
   "name": "@e-group/redux-modules",
   "version": "1.4.0",
   "private": false,
+  "author": "eGroup Team",
+  "description": "eGroup team react-redux modules that share across projects.",
+  "keywords": [
+    "eGroup",
+    "react-redux",
+    "redux-actions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:abrcdf1023/egroup-redux.git",
+    "directory": "packages/redux-modules"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abrcdf1023/egroup-redux/issues"
+  },
   "scripts": {
     "test": "jest",
     "clean": "rimraf build",
@@ -13,8 +29,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "JerryP <egroup.jerrylee@gmail.com>",
-  "license": "MIT",
   "devDependencies": {
     "rimraf": "^2.6.3"
   },
@@ -29,5 +43,8 @@
     "react-redux": "^7.1.3",
     "redux-actions": "^2.6.5",
     "warning": "^4.0.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

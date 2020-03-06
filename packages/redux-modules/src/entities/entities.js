@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
-import { fromJS, List } from 'immutable';
+import { fromJS, Map } from 'immutable';
 
-const isList = List.isList;
+import merger from './merger';
 
 /**
  * Types
@@ -12,8 +12,12 @@ export const SET_ENTITIES_SHALLOW = 'SET_ENTITIES_SHALLOW';
 /**
  * Actions
  */
-export const setEntities = createAction(SET_ENTITIES);
-export const setEntitiesShallow = createAction(SET_ENTITIES_SHALLOW);
+export const setEntities = createAction(SET_ENTITIES, null, (p, m) => m);
+export const setEntitiesShallow = createAction(
+  SET_ENTITIES_SHALLOW,
+  null,
+  (p, m) => m
+);
 
 /**
  * Selectors
@@ -27,17 +31,23 @@ export const reducer = handleActions(
   {
     [SET_ENTITIES]: (state, action) => {
       if (action.payload) {
-        return state.mergeWith(function merger(a, b) {
-          if (a && a.mergeWith && !isList(a) && !isList(b)) {
-            return a.mergeWith(merger, b);
-          }
-          return b;
-        }, action.payload);
+        if (action.meta && typeof Array.isArray(action.meta.path)) {
+          return state.setIn(
+            action.meta.path,
+            state
+              .getIn(action.meta.path, Map())
+              .mergeWith(merger, action.payload)
+          );
+        }
+        return state.mergeWith(merger, action.payload);
       }
       return state;
     },
     [SET_ENTITIES_SHALLOW]: (state, action) => {
       if (action.payload) {
+        if (action.meta && typeof Array.isArray(action.meta.path)) {
+          return state.mergeIn(action.meta.path, action.payload);
+        }
         return state.merge(action.payload);
       }
       return state;

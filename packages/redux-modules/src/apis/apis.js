@@ -18,7 +18,7 @@ export const EG_API_CANCEL = 'EG_API_CANCEL';
 export const EG_API_SUCCESS = 'EG_API_SUCCESS';
 export const EG_API_FAILURE = 'EG_API_FAILURE';
 export const EG_CLEAR_API_RESPONSE = 'EG_CLEAR_API_RESPONSE';
-export const EG_CLEAR_API_RESPONSES = 'EG_CLEAR_API_RESPONSES';
+export const EG_CLEAR_APIS_RESPONSE = 'EG_CLEAR_APIS_RESPONSE';
 
 /**
  * Actions
@@ -29,7 +29,7 @@ export const egApiCancel = createAction(EG_API_CANCEL);
 export const egApiSuccess = createAction(EG_API_SUCCESS);
 export const egApiFailure = createAction(EG_API_FAILURE);
 export const clearApiResponse = createAction(EG_CLEAR_API_RESPONSE);
-export const clearApiResponses = createAction(EG_CLEAR_API_RESPONSES);
+export const clearApisResponse = createAction(EG_CLEAR_APIS_RESPONSE);
 
 /**
  * Selectors
@@ -89,12 +89,12 @@ export const reducer = handleActions(
       const trimedLeafs = getTrimedLeafs(actionType);
       return state.deleteIn([...trimedLeafs, 'response']);
     },
-    [EG_CLEAR_API_RESPONSES]: (state, action) => {
+    [EG_CLEAR_APIS_RESPONSE]: (state, action) => {
       const [isSupported, type] = supportedTypes(action.payload, ['array']);
       if (!isSupported) {
         warning(
           false,
-          `[@e-group/redux-modules] ERROR: Action clearApiResponses is not supported ${type} payload.`
+          `[@e-group/redux-modules] ERROR: Action clearApisResponse is not supported ${type} payload.`
         );
         return state;
       }

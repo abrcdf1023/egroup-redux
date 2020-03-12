@@ -7,14 +7,14 @@ import {
   EG_API_SUCCESS,
   EG_API_FAILURE,
   EG_CLEAR_API_RESPONSE,
-  EG_CLEAR_API_RESPONSES,
+  EG_CLEAR_APIS_RESPONSE,
   egApiTake,
   egApiRequest,
   egApiCancel,
   egApiSuccess,
   egApiFailure,
   clearApiResponse,
-  clearApiResponses,
+  clearApisResponse,
   reducer
 } from './apis';
 
@@ -96,10 +96,10 @@ describe('apis module actions', () => {
     const fetchGetUser = createAction('FETCH_GET_USER');
     // multiple
     const expectedAction = {
-      type: EG_CLEAR_API_RESPONSES,
+      type: EG_CLEAR_APIS_RESPONSE,
       payload: [fetchGetMember(), fetchGetUser()]
     };
-    expect(clearApiResponses([fetchGetMember(), fetchGetUser()])).toEqual(
+    expect(clearApisResponse([fetchGetMember(), fetchGetUser()])).toEqual(
       expectedAction
     );
   });
@@ -376,7 +376,7 @@ describe('apis module reducers', () => {
     );
   });
 
-  it('should handle EG_CLEAR_API_RESPONSES with multiple actions', () => {
+  it('should handle EG_CLEAR_APIS_RESPONSE with multiple actions', () => {
     const fetchGetMember = createAction('COMPONENTS/LIST/FETCH_GET_MEMBER');
     const fetchGetUser = createAction('COMPONENTS/USERS/FETCH_GET_USER');
     const initialState = fromJS({
@@ -420,12 +420,12 @@ describe('apis module reducers', () => {
     expect(
       reducer(
         initialState,
-        clearApiResponses([fetchGetMember(), fetchGetUser()])
+        clearApisResponse([fetchGetMember(), fetchGetUser()])
       )
     ).toEqual(expectedState);
   });
 
-  it('should handle EG_CLEAR_API_RESPONSES without any change', () => {
+  it('should handle EG_CLEAR_APIS_RESPONSE without any change', () => {
     const fetchGetMember = () => ({});
     const initialState = fromJS({
       components: {
@@ -440,9 +440,9 @@ describe('apis module reducers', () => {
         }
       }
     });
-    expect(reducer(initialState, clearApiResponses())).toEqual(initialState);
+    expect(reducer(initialState, clearApisResponse())).toEqual(initialState);
     expect(
-      reducer(initialState, clearApiResponses([fetchGetMember()]))
+      reducer(initialState, clearApisResponse([fetchGetMember()]))
     ).toEqual(initialState);
   });
 });

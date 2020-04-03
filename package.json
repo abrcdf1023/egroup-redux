@@ -25,7 +25,7 @@
     "fetch-mock": "^7.3.9",
     "husky": "^2.4.0",
     "immutable": "^4.0.0-rc.12",
-    "jest": "^24.8.0",
+    "jest": "^25.2.7",
     "lerna": "^3.15.0",
     "lint-staged": "^8.2.0",
     "prettier": "^1.18.2",

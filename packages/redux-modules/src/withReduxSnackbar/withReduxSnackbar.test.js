@@ -9,7 +9,7 @@ import withReduxSnackbar from './withReduxSnackbar';
 let store;
 const snackbarName = 'globalSnackbar';
 
-const MockSnackbar = ({ isOpen, handleClose, title, message }) => {
+const MockSnackbar = ({ isOpen, title, message }) => {
   return (
     <div>
       <p>{title}</p>

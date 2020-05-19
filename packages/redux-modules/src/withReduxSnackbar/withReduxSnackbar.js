@@ -16,19 +16,19 @@ const withReduxSnackbar = name => Snackbar => {
       const {
         forwardedRef,
         initializeSnackbar,
-        handleClose,
+        onClose,
         closeSnackbar,
         ...other
       } = this.props;
-      return (
-        <Snackbar
-          ref={forwardedRef}
-          handleClose={() => {
-            this.props.closeSnackbar(name);
-          }}
-          {...other}
-        />
-      );
+
+      const handleClose = e => {
+        if (onClose) {
+          onClose(e);
+        }
+        this.props.closeSnackbar(name);
+      };
+
+      return <Snackbar ref={forwardedRef} onClose={handleClose} {...other} />;
     }
   }
 

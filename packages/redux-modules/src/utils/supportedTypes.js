@@ -1,7 +1,7 @@
 /**
  * Check variable has supported types(at least one of all).
  * @param {any} variable
- * @param {array} supportedTypes
+ * @param {array} supportedTypes ["object", "null", "array", "boolean", "string", "bigint", "function", "number", "symbol", "undefined"]
  */
 export default function supportedTypes(variable, supportedTypes) {
   let type = typeof variable;

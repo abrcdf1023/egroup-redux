@@ -8,6 +8,7 @@ import {
   EG_API_FAILURE,
   EG_CLEAR_API_RESPONSE,
   EG_CLEAR_APIS_RESPONSE,
+  EG_DESTROY_API,
   egApiTake,
   egApiRequest,
   egApiCancel,
@@ -15,6 +16,7 @@ import {
   egApiFailure,
   clearApiResponse,
   clearApisResponse,
+  destroyApi,
   reducer
 } from './apis';
 
@@ -102,6 +104,15 @@ describe('apis module actions', () => {
     expect(clearApisResponse([fetchGetMember(), fetchGetUser()])).toEqual(
       expectedAction
     );
+  });
+
+  it('should create an action to destroy api', () => {
+    // multiple
+    const expectedAction = {
+      type: EG_DESTROY_API,
+      payload: ['components', 'fetchGet']
+    };
+    expect(destroyApi(['components', 'fetchGet'])).toEqual(expectedAction);
   });
 });
 
@@ -444,5 +455,32 @@ describe('apis module reducers', () => {
     expect(
       reducer(initialState, clearApisResponse([fetchGetMember()]))
     ).toEqual(initialState);
+  });
+
+  it('should handle EG_DESTROY_API', () => {
+    const initialState = fromJS({
+      components: {
+        list: {
+          fetchGetMember: {
+            isError: false,
+            isLoading: false,
+            response: {
+              data: 'data'
+            }
+          }
+        }
+      }
+    });
+    expect(reducer(initialState, destroyApi())).toEqual(initialState);
+    expect(reducer(initialState, destroyApi(['components', 'test']))).toEqual(
+      initialState
+    );
+    expect(reducer(initialState, destroyApi(['components', 'list']))).toEqual(
+      fromJS({
+        components: {
+          list: {}
+        }
+      })
+    );
   });
 });

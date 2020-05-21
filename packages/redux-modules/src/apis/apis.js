@@ -19,6 +19,7 @@ export const EG_API_SUCCESS = 'EG_API_SUCCESS';
 export const EG_API_FAILURE = 'EG_API_FAILURE';
 export const EG_CLEAR_API_RESPONSE = 'EG_CLEAR_API_RESPONSE';
 export const EG_CLEAR_APIS_RESPONSE = 'EG_CLEAR_APIS_RESPONSE';
+export const EG_DESTROY_API = 'EG_DESTROY_API';
 
 /**
  * Actions
@@ -30,6 +31,7 @@ export const egApiSuccess = createAction(EG_API_SUCCESS);
 export const egApiFailure = createAction(EG_API_FAILURE);
 export const clearApiResponse = createAction(EG_CLEAR_API_RESPONSE);
 export const clearApisResponse = createAction(EG_CLEAR_APIS_RESPONSE);
+export const destroyApi = createAction(EG_DESTROY_API);
 
 /**
  * Selectors
@@ -116,6 +118,24 @@ export const reducer = handleActions(
         nextState = nextState.deleteIn([...trimedLeafs, 'response']);
       });
       return nextState;
+    },
+    [EG_DESTROY_API]: (state, action) => {
+      const [isSupported, type] = supportedTypes(action.payload, ['array']);
+      if (!isSupported) {
+        warning(
+          false,
+          `[@e-group/redux-modules] ERROR: Action destroyApi is not supported ${type} payload.`
+        );
+        return state;
+      }
+      if (state.hasIn(action.payload)) {
+        warning(
+          false,
+          `[@e-group/redux-modules] ERROR: Action destroyApi palyload is not exist.`
+        );
+        return state.setIn(action.payload, Map());
+      }
+      return state;
     }
   },
   Map()

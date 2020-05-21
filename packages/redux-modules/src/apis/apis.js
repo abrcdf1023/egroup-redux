@@ -129,10 +129,6 @@ export const reducer = handleActions(
         return state;
       }
       if (state.hasIn(action.payload)) {
-        warning(
-          false,
-          `[@e-group/redux-modules] ERROR: Action destroyApi palyload is not exist.`
-        );
         return state.setIn(action.payload, Map());
       }
       return state;

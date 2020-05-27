@@ -1,32 +1,12 @@
-import { createAction, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import { Map, isImmutable } from 'immutable';
 
-/**
- * Types
- */
-export const INITIALIZE_DIALOG = 'INITIALIZE_DIALOG';
-export const OPEN_DIALOG = 'OPEN_DIALOG';
-export const CLOSE_DIALOG = 'CLOSE_DIALOG';
-export const SET_DIALOG_DATA = 'SET_DIALOG_DATA';
-
-/**
- * Actions
- */
-export const initializeDialog = createAction(INITIALIZE_DIALOG);
-export const openDialog = createAction(OPEN_DIALOG);
-export const closeDialog = createAction(CLOSE_DIALOG);
-export const setDialogData = createAction(SET_DIALOG_DATA);
-
-/**
- * Selectors
- */
-export const getDialogStates = (state, props, dialogName) =>
-  state.getIn(
-    ['dialogs', dialogName],
-    Map({
-      isOpen: false
-    })
-  );
+import {
+  INITIALIZE_DIALOG,
+  OPEN_DIALOG,
+  CLOSE_DIALOG,
+  SET_DIALOG_DATA
+} from '../../dialogs';
 
 /**
  * Reducer

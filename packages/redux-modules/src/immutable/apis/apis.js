@@ -12,7 +12,7 @@ import {
   EG_CLEAR_API_RESPONSE,
   EG_CLEAR_APIS_RESPONSE,
   EG_DESTROY_API
-} from '../../apis/types';
+} from '../../apis';
 
 /**
  * Reducer

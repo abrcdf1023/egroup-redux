@@ -9,7 +9,7 @@ import {
   clearApiResponse,
   clearApisResponse,
   destroyApi
-} from '../../apis/actions';
+} from '../../apis';
 import { reducer } from './apis';
 
 const leafs = ['components', 'list', 'fetchGetMember'];

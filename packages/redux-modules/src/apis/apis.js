@@ -1,13 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 import warning from 'warning';
-import { supportedTypes, camalize, findFetchIndex, trimLeafs } from '../utils';
-
-const getTrimedLeafs = actionType => {
-  const leafs = camalize(actionType).split('/');
-  const fetchIndex = findFetchIndex(leafs);
-  return trimLeafs(leafs, fetchIndex);
-};
+import { supportedTypes, getTrimedLeafs } from '../utils';
 
 /**
  * Types

@@ -1,35 +1,18 @@
-import { createAction, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 import warning from 'warning';
 import { supportedTypes, getTrimedLeafs } from '../utils';
 
-/**
- * Types
- */
-export const EG_API_TAKE = 'EG_API_TAKE';
-export const EG_API_REQUEST = 'EG_API_REQUEST';
-export const EG_API_CANCEL = 'EG_API_CANCEL';
-export const EG_API_SUCCESS = 'EG_API_SUCCESS';
-export const EG_API_FAILURE = 'EG_API_FAILURE';
-export const EG_CLEAR_API_RESPONSE = 'EG_CLEAR_API_RESPONSE';
-export const EG_CLEAR_APIS_RESPONSE = 'EG_CLEAR_APIS_RESPONSE';
-export const EG_DESTROY_API = 'EG_DESTROY_API';
-
-/**
- * Actions
- */
-export const egApiTake = createAction(EG_API_TAKE);
-export const egApiRequest = createAction(EG_API_REQUEST);
-export const egApiCancel = createAction(EG_API_CANCEL);
-export const egApiSuccess = createAction(EG_API_SUCCESS);
-export const egApiFailure = createAction(EG_API_FAILURE);
-export const clearApiResponse = createAction(EG_CLEAR_API_RESPONSE);
-export const clearApisResponse = createAction(EG_CLEAR_APIS_RESPONSE);
-export const destroyApi = createAction(EG_DESTROY_API);
-
-/**
- * Selectors
- */
+import {
+  EG_API_TAKE,
+  EG_API_REQUEST,
+  EG_API_CANCEL,
+  EG_API_SUCCESS,
+  EG_API_FAILURE,
+  EG_CLEAR_API_RESPONSE,
+  EG_CLEAR_APIS_RESPONSE,
+  EG_DESTROY_API
+} from './types';
 
 /**
  * Reducer

@@ -10,7 +10,7 @@ import {
   EG_API_CANCEL,
   EG_API_SUCCESS,
   EG_API_FAILURE
-} from '../apis';
+} from '../apis/types';
 
 const mockStore = configureStore([createHandleApisMiddleware(), thunk]);
 

@@ -4,7 +4,7 @@ import {
   egApiCancel,
   egApiSuccess,
   egApiFailure
-} from '../apis';
+} from '../apis/actions';
 import { camalize, getApiInfos, trimLeafs, findFetchIndex } from '../utils';
 
 /**
@@ -21,7 +21,7 @@ function createHandleApisMiddleware() {
       ) {
         const leafs = camalize(action.type).split('/');
         const fetchIndex = findFetchIndex(leafs);
-        const [apiMethod, apiType] = getApiInfos(leafs[fetchIndex]);
+        const [, apiType] = getApiInfos(leafs[fetchIndex]);
         const trimedLeafs = trimLeafs(leafs, fetchIndex);
         if (!apiType) {
           dispatch(egApiTake({ leafs: trimedLeafs }));

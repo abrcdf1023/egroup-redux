@@ -1,7 +1,8 @@
 import { handleActions } from 'redux-actions';
-import { Map } from 'immutable';
 import warning from 'warning';
+import produce from 'immer';
 import { supportedTypes, getTrimedLeafs } from '../utils';
+import { setIn, deleteIn, hasIn } from '../utils';
 
 import {
   EG_API_TAKE,
@@ -19,43 +20,41 @@ import {
  */
 export const reducer = handleActions(
   {
-    [EG_API_TAKE]: (state, action) =>
-      state.setIn([...action.payload.leafs, 'isError'], false),
-    [EG_API_REQUEST]: (state, action) =>
-      state.setIn([...action.payload.leafs, 'isLoading'], true),
-    [EG_API_CANCEL]: (state, action) =>
-      state.setIn([...action.payload.leafs, 'isLoading'], false),
-    [EG_API_SUCCESS]: (state, action) => {
-      let newState = state.setIn([...action.payload.leafs, 'isLoading'], false);
+    [EG_API_TAKE]: produce((draft, action) => {
+      setIn(draft, [...action.payload.leafs, 'isError'], false);
+    }),
+    [EG_API_REQUEST]: produce((draft, action) => {
+      setIn(draft, [...action.payload.leafs, 'isLoading'], true);
+    }),
+    [EG_API_CANCEL]: produce((draft, action) => {
+      setIn(draft, [...action.payload.leafs, 'isLoading'], false);
+    }),
+    [EG_API_SUCCESS]: produce((draft, action) => {
+      setIn(draft, [...action.payload.leafs, 'isLoading'], false);
 
       if (typeof action.payload.response !== 'undefined') {
-        newState = newState.setIn(
+        setIn(
+          draft,
           [...action.payload.leafs, 'response'],
           action.payload.response
         );
       }
-
-      return newState;
-    },
-    [EG_API_FAILURE]: (state, action) => {
-      let newState = state.setIn([...action.payload.leafs, 'isLoading'], false);
-      newState = newState.setIn([...action.payload.leafs, 'isError'], true);
+    }),
+    [EG_API_FAILURE]: produce((draft, action) => {
+      setIn(draft, [...action.payload.leafs, 'isLoading'], false);
+      setIn(draft, [...action.payload.leafs, 'isError'], true);
       if (action.payload.error) {
-        newState = newState.setIn(
-          [...action.payload.leafs, 'error'],
-          action.payload.error
-        );
+        setIn(draft, [...action.payload.leafs, 'error'], action.payload.error);
       }
-      return newState;
-    },
-    [EG_CLEAR_API_RESPONSE]: (state, action) => {
+    }),
+    [EG_CLEAR_API_RESPONSE]: produce((draft, action) => {
       const [isSupported, type] = supportedTypes(action.payload, ['object']);
       if (!isSupported) {
         warning(
           false,
           `[@e-group/redux-modules] ERROR: Action "clearApiResponse" is not supported "${type}" payload.`
         );
-        return state;
+        return;
       }
       const actionType = action.payload.type;
       if (typeof actionType !== 'string') {
@@ -63,19 +62,19 @@ export const reducer = handleActions(
           false,
           `[@e-group/redux-modules] ERROR: Redux action type need to be "string" not "${typeof actionType}"`
         );
-        return state;
+        return;
       }
       const trimedLeafs = getTrimedLeafs(actionType);
-      return state.deleteIn([...trimedLeafs, 'response']);
-    },
-    [EG_CLEAR_APIS_RESPONSE]: (state, action) => {
+      deleteIn(draft, [...trimedLeafs, 'response']);
+    }),
+    [EG_CLEAR_APIS_RESPONSE]: produce((draft, action) => {
       const [isSupported, type] = supportedTypes(action.payload, ['array']);
       if (!isSupported) {
         warning(
           false,
           `[@e-group/redux-modules] ERROR: Action clearApisResponse is not supported ${type} payload.`
         );
-        return state;
+        return;
       }
       const actionTypes = [];
       for (let i = 0; i < action.payload.length; i++) {
@@ -85,31 +84,28 @@ export const reducer = handleActions(
             false,
             `[@e-group/redux-modules] ERROR: Redux action type need to be "string" not "${typeof actionType}"`
           );
-          return state;
+          return;
         }
         actionTypes.push(actionType);
       }
-      let nextState = state;
       actionTypes.forEach(actionType => {
         const trimedLeafs = getTrimedLeafs(actionType);
-        nextState = nextState.deleteIn([...trimedLeafs, 'response']);
+        deleteIn(draft, [...trimedLeafs, 'response']);
       });
-      return nextState;
-    },
-    [EG_DESTROY_API]: (state, action) => {
+    }),
+    [EG_DESTROY_API]: produce((draft, action) => {
       const [isSupported, type] = supportedTypes(action.payload, ['array']);
       if (!isSupported) {
         warning(
           false,
           `[@e-group/redux-modules] ERROR: Action destroyApi is not supported ${type} payload.`
         );
-        return state;
+        return;
       }
-      if (state.hasIn(action.payload)) {
-        return state.setIn(action.payload, Map());
+      if (hasIn(draft, action.payload)) {
+        setIn(draft, action.payload, {});
       }
-      return state;
-    }
+    })
   },
-  Map()
+  {}
 );

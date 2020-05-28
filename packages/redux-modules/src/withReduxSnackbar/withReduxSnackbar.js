@@ -37,16 +37,13 @@ const withReduxSnackbar = name => Snackbar => {
    * https://github.com/reduxjs/react-redux/issues/914
    */
   const mapStateToProps = (state, props) => ({
-    ...getSnackbarStates(state, props, name).toJS()
+    ...getSnackbarStates(state, props, name)
   });
 
-  const ConnectedComponent = connect(
-    mapStateToProps,
-    {
-      initializeSnackbar,
-      closeSnackbar
-    }
-  )(ReduxSnackbar);
+  const ConnectedComponent = connect(mapStateToProps, {
+    initializeSnackbar,
+    closeSnackbar
+  })(ReduxSnackbar);
 
   /**
    * Forwarding refs in higher-order components

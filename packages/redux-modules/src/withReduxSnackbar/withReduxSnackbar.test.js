@@ -2,7 +2,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 import React from 'react';
 import { render } from '@testing-library/react';
-import { fromJS } from 'immutable';
 import configureStore from 'redux-mock-store';
 import withReduxSnackbar from './withReduxSnackbar';
 
@@ -22,17 +21,15 @@ describe('Redux Snackbar HOC', () => {
   beforeEach(() => {
     const mockStore = configureStore();
 
-    store = mockStore(
-      fromJS({
-        snackbars: {
-          [snackbarName]: {
-            isOpen: false,
-            title: 'snackbar title',
-            message: 'snackbar message'
-          }
+    store = mockStore({
+      snackbars: {
+        [snackbarName]: {
+          isOpen: false,
+          title: 'snackbar title',
+          message: 'snackbar message'
         }
-      })
-    );
+      }
+    });
   });
   it('Should render the component only when snackbar prop is true', () => {
     const ReduxSnackbar = withReduxSnackbar(snackbarName)(MockSnackbar);

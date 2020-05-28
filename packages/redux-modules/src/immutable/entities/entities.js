@@ -1,28 +1,9 @@
-import { createAction, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import { fromJS, Map } from 'immutable';
 
-import merger from './merger';
+import merger from '../../utils/merger';
 
-/**
- * Types
- */
-export const SET_ENTITIES = 'SET_ENTITIES';
-export const SET_ENTITIES_SHALLOW = 'SET_ENTITIES_SHALLOW';
-
-/**
- * Actions
- */
-export const setEntities = createAction(SET_ENTITIES, null, (p, m) => m);
-export const setEntitiesShallow = createAction(
-  SET_ENTITIES_SHALLOW,
-  null,
-  (p, m) => m
-);
-
-/**
- * Selectors
- */
-export const getEntities = state => state.get('entities');
+import { SET_ENTITIES, SET_ENTITIES_SHALLOW } from '../../entities';
 
 /**
  * Reducer

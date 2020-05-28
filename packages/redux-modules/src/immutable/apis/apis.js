@@ -73,7 +73,7 @@ export const reducer = handleActions(
       if (!isSupported) {
         warning(
           false,
-          `[@e-group/redux-modules] ERROR: Action clearApisResponse is not supported ${type} payload.`
+          `[@e-group/redux-modules] ERROR: Action "clearApisResponse" is not supported ${type} payload.`
         );
         return state;
       }
@@ -101,7 +101,7 @@ export const reducer = handleActions(
       if (!isSupported) {
         warning(
           false,
-          `[@e-group/redux-modules] ERROR: Action destroyApi is not supported ${type} payload.`
+          `[@e-group/redux-modules] ERROR: Action "destroyApi" is not supported ${type} payload.`
         );
         return state;
       }

@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { fromJS, Map } from 'immutable';
 
-import merger from '../../utils/merger';
+import { merger } from '../../utils';
 
 import { SET_ENTITIES, SET_ENTITIES_SHALLOW } from '../../entities';
 

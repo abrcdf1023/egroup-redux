@@ -1,5 +1,4 @@
 import { getEntities } from './selectors';
-import { fromJS } from 'immutable';
 
 const defaultEntities = {
   users: {
@@ -17,10 +16,10 @@ const defaultEntities = {
 };
 
 describe('entities selectors', () => {
-  const rootStates = fromJS(defaultEntities);
-  const state = fromJS({
+  const rootStates = defaultEntities;
+  const state = {
     entities: defaultEntities
-  });
+  };
   it('should get entities', () => {
     expect(getEntities(state)).toEqual(rootStates);
   });

@@ -1,4 +1,3 @@
-import { fromJS } from 'immutable';
 import { setEntities, setEntitiesShallow } from './actions';
 import { reducer } from './entities';
 
@@ -28,85 +27,87 @@ const entities = {
 
 describe('entities reducers', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual(fromJS({}));
+    expect(reducer(undefined, {})).toEqual({});
   });
 
   it('should handle SET_ENTITIES', () => {
-    expect(reducer(fromJS({}), setEntities(fromJS(entities)))).toEqual(
-      fromJS(entities)
-    );
+    expect(reducer({}, setEntities(entities))).toEqual(entities);
   });
 
-  it('should handle SET_ENTITIES without value', () => {
-    expect(reducer(fromJS({}), setEntities())).toEqual(fromJS({}));
+  it('should handle SET_ENTITIES without any change', () => {
+    expect(reducer({}, setEntities())).toEqual({});
+    expect(reducer({}, setEntities(10))).toEqual({});
+    expect(reducer({}, setEntities([]))).toEqual({});
+    expect(reducer({}, setEntities('foo'))).toEqual({});
   });
 
   it('should handle SET_ENTITIES with meta', () => {
     expect(
       reducer(
-        fromJS({}),
-        setEntities(fromJS(entities.users), {
+        {},
+        setEntities(entities.users, {
           path: ['users']
         })
       )
-    ).toEqual(fromJS(entities));
+    ).toEqual(entities);
 
     expect(
       reducer(
-        fromJS(defaultEntities),
-        setEntities(fromJS(entities.users), {
+        defaultEntities,
+        setEntities(entities.users, {
           path: ['users']
         })
       )
-    ).toEqual(fromJS(defaultEntities));
+    ).toEqual(defaultEntities);
   });
 
   it('should handle SET_ENTITIES with default entities', () => {
-    expect(
-      reducer(fromJS(defaultEntities), setEntities(fromJS(entities)))
-    ).toEqual(fromJS(defaultEntities));
-  });
-
-  it('should handle SET_ENTITIES_SHALLOW', () => {
-    expect(reducer(fromJS({}), setEntitiesShallow(fromJS(entities)))).toEqual(
-      fromJS(entities)
+    expect(reducer(defaultEntities, setEntities(entities))).toEqual(
+      defaultEntities
     );
   });
 
-  it('should handle SET_ENTITIES_SHALLOW without value', () => {
-    expect(reducer(fromJS({}), setEntitiesShallow())).toEqual(fromJS({}));
+  it('should handle SET_ENTITIES_SHALLOW', () => {
+    expect(reducer({}, setEntitiesShallow(entities))).toEqual(entities);
+  });
+
+  it('should handle SET_ENTITIES_SHALLOW without any change', () => {
+    expect(reducer({}, setEntitiesShallow())).toEqual({});
+    expect(reducer({}, setEntitiesShallow(10))).toEqual({});
+    expect(reducer({}, setEntitiesShallow([]))).toEqual({});
+    expect(reducer({}, setEntitiesShallow('foo'))).toEqual({});
   });
 
   it('should handle SET_ENTITIES_SHALLOW with meta', () => {
     expect(
       reducer(
-        fromJS({}),
-        setEntitiesShallow(fromJS(entities.users), {
+        {},
+        setEntitiesShallow(entities.users, {
           path: ['users']
         })
       )
-    ).toEqual(fromJS(entities));
+    ).toEqual(entities);
 
     expect(
       reducer(
-        fromJS({
+        {
           users: {
             1: {
               id: '1',
               name: 'Leo'
             }
           }
-        }),
-        setEntitiesShallow(fromJS(entities.users), {
+        },
+        setEntitiesShallow(entities.users, {
           path: ['users']
         })
       )
-    ).toEqual(fromJS(entities));
+    ).toEqual(entities);
   });
 
   it('should handle SET_ENTITIES_SHALLOW with default entities', () => {
-    expect(
-      reducer(fromJS(defaultEntities), setEntitiesShallow(fromJS(entities)))
-    ).toEqual(fromJS(entities));
+    expect(reducer(defaultEntities, setEntitiesShallow(entities))).toEqual(
+      entities
+    );
   });
 });

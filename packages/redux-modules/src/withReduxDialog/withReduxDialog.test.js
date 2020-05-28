@@ -2,7 +2,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 import React from 'react';
 import { render } from '@testing-library/react';
-import { fromJS } from 'immutable';
 import configureStore from 'redux-mock-store';
 import withReduxDialog from './withReduxDialog';
 
@@ -23,17 +22,15 @@ describe('Redux Dialog HOC', () => {
   beforeEach(() => {
     const mockStore = configureStore();
 
-    store = mockStore(
-      fromJS({
-        dialogs: {
-          [dialogName]: {
-            isOpen: false,
-            title: 'dialog title',
-            message: 'dialog message'
-          }
+    store = mockStore({
+      dialogs: {
+        [dialogName]: {
+          isOpen: false,
+          title: 'dialog title',
+          message: 'dialog message'
         }
-      })
-    );
+      }
+    });
   });
   it('Should render the component only when dialog prop is true', () => {
     const ReduxDialog = withReduxDialog(dialogName)(MockDialog);

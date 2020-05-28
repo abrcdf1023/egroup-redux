@@ -33,16 +33,13 @@ const withReduxDialog = name => Dialog => {
    * https://github.com/reduxjs/react-redux/issues/914
    */
   const mapStateToProps = (state, props) => ({
-    ...getDialogStates(state, props, name).toJS()
+    ...getDialogStates(state, props, name)
   });
 
-  const ConnectedComponent = connect(
-    mapStateToProps,
-    {
-      initializeDialog,
-      closeDialog
-    }
-  )(ReduxDialog);
+  const ConnectedComponent = connect(mapStateToProps, {
+    initializeDialog,
+    closeDialog
+  })(ReduxDialog);
 
   /**
    * Forwarding refs in higher-order components

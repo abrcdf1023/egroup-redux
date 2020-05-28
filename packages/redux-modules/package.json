@@ -38,6 +38,7 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
+    "@e-group/utils": "^6.22.0",
     "immer": "^6.0.8",
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.15",

@@ -2,7 +2,9 @@ import { handleActions } from 'redux-actions';
 import produce from 'immer';
 import merge from 'lodash.merge';
 import warning from 'warning';
-import { supportedTypes, hasIn, setIn } from '../utils';
+import setIn from '@e-group/utils/setIn';
+import hasIn from '@e-group/utils/hasIn';
+import { supportedTypes } from '../utils';
 
 import {
   INITIALIZE_DIALOG,

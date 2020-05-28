@@ -4,7 +4,3 @@ export { default as trimLeafs } from './trimLeafs';
 export { default as supportedTypes } from './supportedTypes';
 export { default as findFetchIndex } from './findFetchIndex';
 export { default as getTrimedLeafs } from './getTrimedLeafs';
-export { default as setIn } from './setIn';
-export { default as deleteIn } from './deleteIn';
-export { default as hasIn } from './hasIn';
-export { default as getIn } from './getIn';

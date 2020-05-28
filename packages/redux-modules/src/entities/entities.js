@@ -3,7 +3,9 @@ import produce from 'immer';
 import warning from 'warning';
 import assign from 'lodash.assign';
 import mergeWith from 'lodash.mergewith';
-import { supportedTypes, setIn, getIn } from '../utils';
+import getIn from '@e-group/utils/getIn';
+import setIn from '@e-group/utils/setIn';
+import { supportedTypes } from '../utils';
 
 import { SET_ENTITIES, SET_ENTITIES_SHALLOW } from './types';
 

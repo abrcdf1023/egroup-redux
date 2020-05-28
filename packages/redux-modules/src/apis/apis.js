@@ -1,13 +1,10 @@
 import { handleActions } from 'redux-actions';
 import warning from 'warning';
 import produce from 'immer';
-import {
-  supportedTypes,
-  getTrimedLeafs,
-  setIn,
-  deleteIn,
-  hasIn
-} from '../utils';
+import setIn from '@e-group/utils/setIn';
+import deleteIn from '@e-group/utils/deleteIn';
+import hasIn from '@e-group/utils/hasIn';
+import { supportedTypes, getTrimedLeafs } from '../utils';
 
 import {
   EG_API_TAKE,

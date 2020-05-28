@@ -1,12 +1,6 @@
 import { fromJS } from 'immutable';
-import {
-  SET_ENTITIES,
-  SET_ENTITIES_SHALLOW,
-  setEntities,
-  setEntitiesShallow,
-  reducer,
-  getEntities
-} from './entities';
+import { setEntities, setEntitiesShallow } from './actions';
+import { reducer } from './entities';
 
 const defaultEntities = {
   users: {
@@ -31,54 +25,6 @@ const entities = {
     }
   }
 };
-
-describe('entities actions', () => {
-  it('should create an action to set entities', () => {
-    const expectedAction = {
-      type: SET_ENTITIES,
-      payload: entities
-    };
-    expect(setEntities(entities)).toEqual(expectedAction);
-  });
-
-  it('should create an action to set entities with meta', () => {
-    const expectedAction = {
-      type: SET_ENTITIES,
-      payload: entities.users,
-      meta: {
-        path: ['users']
-      }
-    };
-    expect(
-      setEntities(entities.users, {
-        path: ['users']
-      })
-    ).toEqual(expectedAction);
-  });
-
-  it('should create an action to set entities shallow', () => {
-    const expectedAction = {
-      type: SET_ENTITIES_SHALLOW,
-      payload: entities
-    };
-    expect(setEntitiesShallow(entities)).toEqual(expectedAction);
-  });
-
-  it('should create an action to set entities shallow with meta', () => {
-    const expectedAction = {
-      type: SET_ENTITIES_SHALLOW,
-      payload: entities.users,
-      meta: {
-        path: ['users']
-      }
-    };
-    expect(
-      setEntitiesShallow(entities.users, {
-        path: ['users']
-      })
-    ).toEqual(expectedAction);
-  });
-});
 
 describe('entities reducers', () => {
   it('should return the initial state', () => {
@@ -162,15 +108,5 @@ describe('entities reducers', () => {
     expect(
       reducer(fromJS(defaultEntities), setEntitiesShallow(fromJS(entities)))
     ).toEqual(fromJS(entities));
-  });
-});
-
-describe('dialog selectors', () => {
-  const rootStates = fromJS(defaultEntities);
-  const state = fromJS({
-    entities: defaultEntities
-  });
-  it('should get entities', () => {
-    expect(getEntities(state)).toEqual(rootStates);
   });
 });

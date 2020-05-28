@@ -1,27 +1,12 @@
-import { createAction, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import { Map, isImmutable } from 'immutable';
 
-/**
- * Types
- */
-export const INITIALIZE_SNACKBAR = 'INITIALIZE_SNACKBAR';
-export const OPEN_SNACKBAR = 'OPEN_SNACKBAR';
-export const CLOSE_SNACKBAR = 'CLOSE_SNACKBAR';
-export const SET_SNACKBAR_DATA = 'SET_SNACKBAR_DATA';
-
-/**
- * Actions
- */
-export const initializeSnackbar = createAction(INITIALIZE_SNACKBAR);
-export const openSnackbar = createAction(OPEN_SNACKBAR);
-export const closeSnackbar = createAction(CLOSE_SNACKBAR);
-export const setSnackbarData = createAction(SET_SNACKBAR_DATA);
-
-/**
- * Selectors
- */
-export const getSnackbarStates = (state, props, name) =>
-  state.getIn(['snackbars', name], Map());
+import {
+  INITIALIZE_SNACKBAR,
+  OPEN_SNACKBAR,
+  CLOSE_SNACKBAR,
+  SET_SNACKBAR_DATA
+} from '../../snackbars';
 
 /**
  * Reducer

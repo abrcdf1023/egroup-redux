@@ -83,6 +83,6 @@ describe('dialog reducers', () => {
       }
     });
     expect(reducer(state, setDialogData())).toEqual(state);
-    expect(reducer(state, setDialogData('TEST'))).toEqual(state);
+    expect(reducer(state, setDialogData('foo'))).toEqual(state);
   });
 });

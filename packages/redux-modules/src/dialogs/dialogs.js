@@ -68,7 +68,7 @@ export const reducer = handleActions(
       } else {
         warning(
           false,
-          `[@e-group/redux-modules] ERROR: dialog "${name}" is not exist.`
+          `[@e-group/redux-modules] ERROR: Dialog "${name}" is not exist.`
         );
       }
     })

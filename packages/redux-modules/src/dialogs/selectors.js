@@ -1,9 +1,6 @@
-import { Map } from 'immutable';
+import { getIn } from '../utils';
 
 export const getDialogStates = (state, props, dialogName) =>
-  state.getIn(
-    ['dialogs', dialogName],
-    Map({
-      isOpen: false
-    })
-  );
+  getIn(state, ['dialogs', dialogName], {
+    isOpen: false
+  });

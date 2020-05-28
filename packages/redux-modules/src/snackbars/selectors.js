@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { getIn } from '../utils';
 
 export const getSnackbarStates = (state, props, name) =>
-  state.getIn(['snackbars', name], Map());
+  getIn(state, ['snackbars', name], {});

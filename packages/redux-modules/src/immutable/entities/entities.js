@@ -1,9 +1,17 @@
 import { handleActions } from 'redux-actions';
 import { fromJS, Map } from 'immutable';
-
-import { merger } from '../../utils';
+import { List } from 'immutable';
 
 import { SET_ENTITIES, SET_ENTITIES_SHALLOW } from '../../entities';
+
+const isList = List.isList;
+
+function merger(a, b) {
+  if (a && a.mergeWith && !isList(a) && !isList(b)) {
+    return a.mergeWith(merger, b);
+  }
+  return b;
+}
 
 /**
  * Reducer

@@ -1,5 +1,6 @@
 import { fromJS } from 'immutable';
-import { setEntities, setEntitiesShallow, reducer } from '../../entities';
+import { setEntities, setEntitiesShallow } from '../../entities';
+import { reducer } from './entities';
 
 const defaultEntities = {
   users: {

@@ -918,10 +918,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@e-group/utils@^6.22.3":
-  version "6.22.3"
-  resolved "https://registry.yarnpkg.com/@e-group/utils/-/utils-6.22.3.tgz#7ea342c006714f56bb328941b81fe290694344fe"
-  integrity sha512-RUDFufWtpUr5U8ROEUpMYMiGkXIPcFlWkZ/3ZEKAYBdaYICl3dbu/Nx6Gqln12QXXmYUFQ/kHdxpPmD+fdoB8A==
+"@e-group/utils@^6.22.4":
+  version "6.22.4"
+  resolved "https://registry.yarnpkg.com/@e-group/utils/-/utils-6.22.4.tgz#65b46f2b6b1d1df89f776f3198a5258a8f8ea7ea"
+  integrity sha512-nTG/XJtMgjfPToj6DHTFUxaQ6N9V9bzejNEX52Udou8I6MBBgMlWAQmKjEAsvwAnBNht9BU4xjUsRYXa3Zh7BA==
   dependencies:
     draft-js "^0.11.2"
     immutable "^4.0.0-rc.12"

@@ -21,9 +21,12 @@ const withReduxSnackbar = name => Snackbar => {
         ...other
       } = this.props;
 
-      const handleClose = e => {
+      const handleClose = (event, reason) => {
         if (onClose) {
-          onClose(e);
+          onClose(event);
+        }
+        if (reason === 'clickaway') {
+          return;
         }
         this.props.closeSnackbar(name);
       };

@@ -1,7 +1,7 @@
 module.exports = function(api) {
   if (api.env(['test'])) {
     return {
-      presets: ['@babel/preset-env', '@babel/preset-react']
+      presets: ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react']
     };
   }
 
@@ -14,6 +14,7 @@ module.exports = function(api) {
           useBuiltIns: 'entry',
         }
       ],
+      '@babel/preset-typescript',
       '@babel/preset-react'
     ],
     plugins: [
@@ -22,7 +23,8 @@ module.exports = function(api) {
       '@babel/plugin-transform-runtime'
     ],
     ignore: [
-      "**/*.test.js"
+      "**/*.test.js",
+      "**/*.d.ts"
     ]
   };
 };

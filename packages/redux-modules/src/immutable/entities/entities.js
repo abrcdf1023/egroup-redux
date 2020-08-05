@@ -5,7 +5,8 @@ import { List } from 'immutable';
 import {
   SET_ENTITIES,
   SET_ENTITIES_SHALLOW,
-  SET_ENTITIES_ARRAY_CONCAT
+  SET_ENTITIES_ARRAY_CONCAT,
+  DELETE_ENTITIES_IN
 } from '../../entities';
 
 const isList = List.isList;
@@ -54,6 +55,12 @@ export const reducer = handleActions(
           );
         }
         return state.mergeDeep(action.payload);
+      }
+      return state;
+    },
+    [DELETE_ENTITIES_IN]: (state, action) => {
+      if (action.payload) {
+        return state.deleteIn(action.payload);
       }
       return state;
     }

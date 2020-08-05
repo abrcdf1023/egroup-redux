@@ -2,7 +2,8 @@ import { fromJS } from 'immutable';
 import {
   setEntities,
   setEntitiesShallow,
-  setEntitiesArrayConcat
+  setEntitiesArrayConcat,
+  deleteEntitiesIn
 } from '../../entities';
 import { reducer } from './entities';
 
@@ -173,5 +174,15 @@ describe('entities reducers', () => {
         }
       })
     );
+  });
+
+  it('should handle DELETE_ENTITIES_IN', () => {
+    expect(
+      reducer(fromJS(defaultEntities), deleteEntitiesIn(['users', '1']))
+    ).toEqual(fromJS({ users: {} }));
+  });
+
+  it('should handle DELETE_ENTITIES_IN without value', () => {
+    expect(reducer(fromJS({}), deleteEntitiesIn())).toEqual(fromJS({}));
   });
 });

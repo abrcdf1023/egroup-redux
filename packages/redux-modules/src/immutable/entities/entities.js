@@ -2,7 +2,11 @@ import { handleActions } from 'redux-actions';
 import { fromJS, Map } from 'immutable';
 import { List } from 'immutable';
 
-import { SET_ENTITIES, SET_ENTITIES_SHALLOW } from '../../entities';
+import {
+  SET_ENTITIES,
+  SET_ENTITIES_SHALLOW,
+  SET_ENTITIES_ARRAY_CONCAT
+} from '../../entities';
 
 const isList = List.isList;
 
@@ -38,6 +42,18 @@ export const reducer = handleActions(
           return state.mergeIn(action.meta.path, action.payload);
         }
         return state.merge(action.payload);
+      }
+      return state;
+    },
+    [SET_ENTITIES_ARRAY_CONCAT]: (state, action) => {
+      if (action.payload) {
+        if (action.meta && typeof Array.isArray(action.meta.path)) {
+          return state.setIn(
+            action.meta.path,
+            state.getIn(action.meta.path, Map()).mergeDeep(action.payload)
+          );
+        }
+        return state.mergeDeep(action.payload);
       }
       return state;
     }

@@ -1,5 +1,9 @@
 import { fromJS } from 'immutable';
-import { setEntities, setEntitiesShallow } from '../../entities';
+import {
+  setEntities,
+  setEntitiesShallow,
+  setEntitiesArrayConcat
+} from '../../entities';
 import { reducer } from './entities';
 
 const defaultEntities = {
@@ -108,5 +112,66 @@ describe('entities reducers', () => {
     expect(
       reducer(fromJS(defaultEntities), setEntitiesShallow(fromJS(entities)))
     ).toEqual(fromJS(entities));
+  });
+
+  it('should handle SET_ENTITIES_ARRAY_CONCAT', () => {
+    expect(
+      reducer(fromJS({}), setEntitiesArrayConcat(fromJS(entities)))
+    ).toEqual(fromJS(entities));
+  });
+
+  it('should handle SET_ENTITIES_ARRAY_CONCAT without value', () => {
+    expect(reducer(fromJS({}), setEntitiesArrayConcat())).toEqual(fromJS({}));
+  });
+
+  it('should handle SET_ENTITIES_ARRAY_CONCAT with meta', () => {
+    expect(
+      reducer(
+        fromJS({}),
+        setEntitiesArrayConcat(fromJS(entities.users), {
+          path: ['users']
+        })
+      )
+    ).toEqual(fromJS(entities));
+
+    expect(
+      reducer(
+        fromJS(defaultEntities),
+        setEntitiesArrayConcat(fromJS(entities.users), {
+          path: ['users']
+        })
+      )
+    ).toEqual(fromJS(defaultEntities));
+  });
+
+  it('should handle SET_ENTITIES_ARRAY_CONCAT with default entities', () => {
+    expect(
+      reducer(fromJS(defaultEntities), setEntitiesArrayConcat(fromJS(entities)))
+    ).toEqual(fromJS(defaultEntities));
+  });
+
+  it('should handle SET_ENTITIES_ARRAY_CONCAT with concat deep array', () => {
+    expect(
+      reducer(
+        fromJS({
+          foo: {
+            bar: ['a', 'b', 'c', 'd']
+          }
+        }),
+        setEntitiesArrayConcat(
+          fromJS({
+            foo: {
+              bar: ['d', 'e', 'f']
+            }
+          })
+        )
+      )
+    ).toEqual(
+      fromJS({
+        foo: {
+          bar: ['a', 'b', 'c', 'd', 'd', 'e', 'f']
+        }
+      })
+    );
   });
 });

@@ -40,7 +40,10 @@ export const snackbars = handleActions(
         );
         return;
       }
-      setIn(draft, [action.payload, 'isOpen'], true);
+      const name = action.payload;
+      if (hasIn(draft, [name])) {
+        setIn(draft, [name, 'isOpen'], true);
+      }
     }),
     [CLOSE_SNACKBAR]: produce((draft, action) => {
       if (!action.payload) return;
@@ -52,7 +55,10 @@ export const snackbars = handleActions(
         );
         return;
       }
-      setIn(draft, [action.payload, 'isOpen'], false);
+      const name = action.payload;
+      if (hasIn(draft, [name])) {
+        setIn(draft, [name, 'isOpen'], false);
+      }
     }),
     [SET_SNACKBAR_DATA]: produce((draft, action) => {
       if (!action.payload) return;

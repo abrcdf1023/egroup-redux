@@ -41,6 +41,7 @@ describe('dialog reducers', () => {
     });
     expect(reducer(state, openDialog())).toEqual(state);
     expect(reducer(state, openDialog({}))).toEqual(state);
+    expect(reducer({}, openDialog(name))).toEqual({});
   });
 
   it('should handle CLOSE_DIALOG', () => {
@@ -56,6 +57,7 @@ describe('dialog reducers', () => {
     });
     expect(reducer(state, closeDialog())).toEqual(state);
     expect(reducer(state, closeDialog({}))).toEqual(state);
+    expect(reducer({}, closeDialog(name))).toEqual({});
   });
 
   it('should handle SET_DIALOG_DATA', () => {
@@ -82,5 +84,13 @@ describe('dialog reducers', () => {
     });
     expect(reducer(state, setDialogData())).toEqual(state);
     expect(reducer(state, setDialogData('foo'))).toEqual(state);
+    expect(
+      reducer(
+        {},
+        setDialogData({
+          name: name
+        })
+      )
+    ).toEqual({});
   });
 });

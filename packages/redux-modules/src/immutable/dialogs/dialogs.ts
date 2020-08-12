@@ -11,7 +11,7 @@ import {
 /**
  * Reducer
  */
-export const reducer = handleActions(
+export const dialogs = handleActions(
   {
     [INITIALIZE_DIALOG]: (state, action) => {
       if (action.payload) {

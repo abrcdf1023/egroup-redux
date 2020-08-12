@@ -11,7 +11,7 @@ import {
 /**
  * Reducer
  */
-export const reducer = handleActions(
+export const snackbars = handleActions(
   {
     [INITIALIZE_SNACKBAR]: (state, action) => {
       if (action.payload) {

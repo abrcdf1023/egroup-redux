@@ -6,7 +6,7 @@ import {
   closeSnackbar,
   setSnackbarData
 } from '../../snackbars';
-import { reducer } from './snackbars';
+import { snackbars as reducer } from './snackbars';
 
 const snackbarName = 'globalSnackbar';
 

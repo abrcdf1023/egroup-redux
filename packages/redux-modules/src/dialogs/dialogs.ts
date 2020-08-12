@@ -16,7 +16,7 @@ import {
 /**
  * Reducer
  */
-export const reducer = handleActions(
+export const dialogs = handleActions(
   {
     [INITIALIZE_DIALOG]: produce((draft, action) => {
       if (!action.payload) return;

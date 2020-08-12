@@ -4,7 +4,7 @@ import {
   closeDialog,
   setDialogData
 } from './actions';
-import { reducer } from './dialogs';
+import { dialogs as reducer } from './dialogs';
 
 const name = 'alertAialog';
 

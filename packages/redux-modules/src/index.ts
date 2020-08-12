@@ -1,2 +1,2 @@
-export { withReduxDialog } from './withReduxDialog';
-export * from './withReduxDialog';
+export * from './dialogs';
+export * from './snackbars';

@@ -17,6 +17,11 @@ export interface StateProps {
   isOpen: boolean;
 }
 
+/**
+ * Please read this article for more info.
+ * https://medium.com/@martin_hotell/react-refs-with-typescript-a32d56c4d315
+ * @param name
+ */
 const withReduxDialog = (name: string) => <
   T extends Component,
   OriginalProps extends {}
@@ -78,9 +83,8 @@ const withReduxDialog = (name: string) => <
   }
 
   // Give this component a more helpful display name in DevTools.
-  const dialogComponentName =
-    WrappedComponent.displayName || WrappedComponent.name;
-  RefForwardingFactory.displayName = `withReduxDialog(${dialogComponentName})`;
+  const componentName = WrappedComponent.displayName || WrappedComponent.name;
+  RefForwardingFactory.displayName = `withReduxDialog(${componentName})`;
 
   return forwardRef<T, OriginalProps>(RefForwardingFactory as any);
 };

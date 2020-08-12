@@ -64,14 +64,12 @@ const withReduxDialog = (name: string) => <
     ...getDialogStates(state, ownProps, name)
   });
 
-  const mapDispatchToProps = (): DispatchProps => ({
-    initializeDialog,
-    closeDialog
-  });
-
   const ConnectedComponent = connect<StateProps, DispatchProps, OwnProps>(
     mapStateToProps,
-    mapDispatchToProps
+    {
+      initializeDialog,
+      closeDialog
+    }
   )(WithReduxDialog);
 
   /**

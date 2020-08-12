@@ -66,14 +66,12 @@ const withReduxSnackbar = (name: string) => <
     ...getSnackbarStates(state, ownProps, name)
   });
 
-  const mapDispatchToProps = (): DispatchProps => ({
-    initializeSnackbar,
-    closeSnackbar
-  });
-
   const ConnectedComponent = connect<StateProps, DispatchProps, OwnProps>(
     mapStateToProps,
-    mapDispatchToProps
+    {
+      initializeSnackbar,
+      closeSnackbar
+    }
   )(WithReduxSnackbar);
 
   /**

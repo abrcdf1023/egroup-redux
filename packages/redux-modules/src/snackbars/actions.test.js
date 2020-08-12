@@ -11,31 +11,31 @@ import {
   setSnackbarData
 } from './actions';
 
-const snackbarName = 'globalSnackbar';
+const name = 'globalSnackbar';
 
 describe('snackbar actions', () => {
   it('should create an action to initialize snackbar', () => {
     const expectedAction = {
       type: INITIALIZE_SNACKBAR,
-      payload: snackbarName
+      payload: name
     };
-    expect(initializeSnackbar(snackbarName)).toEqual(expectedAction);
+    expect(initializeSnackbar(name)).toEqual(expectedAction);
   });
 
   it('should create an action to open snackbar', () => {
     const expectedAction = {
       type: OPEN_SNACKBAR,
-      payload: snackbarName
+      payload: name
     };
-    expect(openSnackbar(snackbarName)).toEqual(expectedAction);
+    expect(openSnackbar(name)).toEqual(expectedAction);
   });
 
   it('should create an action to close snackbar', () => {
     const expectedAction = {
       type: CLOSE_SNACKBAR,
-      payload: snackbarName
+      payload: name
     };
-    expect(closeSnackbar(snackbarName)).toEqual(expectedAction);
+    expect(closeSnackbar(name)).toEqual(expectedAction);
   });
 
   it('should create an action to set snackbar data', () => {

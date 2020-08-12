@@ -1,6 +1,6 @@
 import { getSnackbarStates } from './selectors';
 
-const snackbarName = 'globalSnackbar';
+const name = 'globalSnackbar';
 
 describe('snackbar selectors', () => {
   const snackbarStates = {
@@ -10,12 +10,10 @@ describe('snackbar selectors', () => {
   };
   const state = {
     snackbars: {
-      [snackbarName]: snackbarStates
+      [name]: snackbarStates
     }
   };
   it('should get snackbar states by snackbar name', () => {
-    expect(getSnackbarStates(state, null, snackbarName)).toEqual(
-      snackbarStates
-    );
+    expect(getSnackbarStates(state, null, name)).toEqual(snackbarStates);
   });
 });

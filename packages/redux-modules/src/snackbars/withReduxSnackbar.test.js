@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store';
 import withReduxSnackbar from './withReduxSnackbar';
 
 let store;
-const snackbarName = 'globalSnackbar';
+const name = 'globalSnackbar';
 
 const MockSnackbar = React.forwardRef(function MockSnackbar(props, ref) {
   const { isOpen, handleClose, title, message } = props;
@@ -25,7 +25,7 @@ describe('Redux Snackbar HOC', () => {
 
     store = mockStore({
       snackbars: {
-        [snackbarName]: {
+        [name]: {
           isOpen: true,
           title: 'snackbar title',
           message: 'snackbar message'
@@ -34,14 +34,14 @@ describe('Redux Snackbar HOC', () => {
     });
   });
   it('Should render the component only when snackbar prop is true', () => {
-    const ReduxSnackbar = withReduxSnackbar(snackbarName)(MockSnackbar);
+    const ReduxSnackbar = withReduxSnackbar(name)(MockSnackbar);
     const { getByText } = render(<ReduxSnackbar store={store} />);
     expect(getByText('true')).toBeInTheDocument();
     expect(getByText('snackbar title')).toBeInTheDocument();
     expect(getByText('snackbar message')).toBeInTheDocument();
   });
   it('Should pass ref to Snackbar component', () => {
-    const ReduxSnackbar = withReduxSnackbar(snackbarName)(MockSnackbar);
+    const ReduxSnackbar = withReduxSnackbar(name)(MockSnackbar);
     const ref = React.createRef(null);
     render(<ReduxSnackbar ref={ref} store={store} />);
     expect(ref.current).not.toBeNull();

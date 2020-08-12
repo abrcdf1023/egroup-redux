@@ -8,7 +8,7 @@ import {
 } from '../../snackbars';
 import { snackbars as reducer } from './snackbars';
 
-const snackbarName = 'globalSnackbar';
+const name = 'globalSnackbar';
 
 describe('snackbar reducers', () => {
   it('should return the initial state', () => {
@@ -18,28 +18,26 @@ describe('snackbar reducers', () => {
   it('should handle INITIALIZE_SNACKBAR', () => {
     const state = fromJS({});
     const initializeState = fromJS({
-      [snackbarName]: {
+      [name]: {
         isOpen: false
       }
     });
-    expect(reducer(state, initializeSnackbar(snackbarName))).toEqual(
-      initializeState
-    );
+    expect(reducer(state, initializeSnackbar(name))).toEqual(initializeState);
     expect(reducer(state, initializeSnackbar())).toEqual(state);
-    expect(reducer(initializeState, initializeSnackbar(snackbarName))).toEqual(
+    expect(reducer(initializeState, initializeSnackbar(name))).toEqual(
       initializeState
     );
   });
 
   it('should handle OPEN_SNACKBAR', () => {
     const state = fromJS({
-      [snackbarName]: {
+      [name]: {
         isOpen: false
       }
     });
-    expect(reducer(state, openSnackbar(snackbarName))).toEqual(
+    expect(reducer(state, openSnackbar(name))).toEqual(
       fromJS({
-        [snackbarName]: {
+        [name]: {
           isOpen: true
         }
       })
@@ -49,13 +47,13 @@ describe('snackbar reducers', () => {
 
   it('should handle CLOSE_SNACKBAR', () => {
     const state = fromJS({
-      [snackbarName]: {
+      [name]: {
         isOpen: true
       }
     });
-    expect(reducer(state, closeSnackbar(snackbarName))).toEqual(
+    expect(reducer(state, closeSnackbar(name))).toEqual(
       fromJS({
-        [snackbarName]: {
+        [name]: {
           isOpen: false
         }
       })
@@ -65,7 +63,7 @@ describe('snackbar reducers', () => {
 
   it('should handle SET_SNACKBAR_DATA', () => {
     const state = fromJS({
-      [snackbarName]: {
+      [name]: {
         isOpen: false
       }
     });
@@ -73,14 +71,14 @@ describe('snackbar reducers', () => {
       reducer(
         state,
         setSnackbarData({
-          name: snackbarName,
+          name: name,
           message: 'message',
           title: 'title'
         })
       )
     ).toEqual(
       fromJS({
-        [snackbarName]: {
+        [name]: {
           isOpen: false,
           message: 'message',
           title: 'title'
@@ -92,7 +90,7 @@ describe('snackbar reducers', () => {
       reducer(
         fromJS({}),
         setSnackbarData({
-          name: snackbarName
+          name: name
         })
       )
     ).toEqual(fromJS({}));

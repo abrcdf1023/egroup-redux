@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { Map, isImmutable } from 'immutable';
+import { Map, isImmutable, merge } from 'immutable';
 
 import {
   INITIALIZE_SNACKBAR,
@@ -15,7 +15,8 @@ export const reducer = handleActions(
   {
     [INITIALIZE_SNACKBAR]: (state, action) => {
       if (action.payload) {
-        return state.update(action.payload, snackbarState => {
+        const name = String(action.payload);
+        return state.update(name, snackbarState => {
           if (isImmutable(snackbarState)) {
             return snackbarState;
           }
@@ -40,11 +41,13 @@ export const reducer = handleActions(
     },
     [SET_SNACKBAR_DATA]: (state, action) => {
       if (action.payload) {
-        const { name, ...other } = action.payload;
-        return state.update(name, el => el.merge(other));
+        const { name, ...other } = action.payload as any;
+        if (name) {
+          return state.update(name, el => merge(el, other));
+        }
       }
       return state;
     }
   },
-  Map()
+  Map({})
 );

@@ -8,14 +8,16 @@ import withReduxSnackbar from './withReduxSnackbar';
 let store;
 const snackbarName = 'globalSnackbar';
 
-const MockSnackbar = ({ isOpen, title, message }) => {
+const MockSnackbar = React.forwardRef(function MockSnackbar(props, ref) {
+  const { isOpen, handleClose, title, message } = props;
   return (
-    <div>
+    <div ref={ref}>
+      <p>{String(isOpen)}</p>
       <p>{title}</p>
       <p>{message}</p>
     </div>
   );
-};
+});
 
 describe('Redux Snackbar HOC', () => {
   beforeEach(() => {
@@ -24,7 +26,7 @@ describe('Redux Snackbar HOC', () => {
     store = mockStore({
       snackbars: {
         [snackbarName]: {
-          isOpen: false,
+          isOpen: true,
           title: 'snackbar title',
           message: 'snackbar message'
         }
@@ -34,6 +36,7 @@ describe('Redux Snackbar HOC', () => {
   it('Should render the component only when snackbar prop is true', () => {
     const ReduxSnackbar = withReduxSnackbar(snackbarName)(MockSnackbar);
     const { getByText } = render(<ReduxSnackbar store={store} />);
+    expect(getByText('true')).toBeInTheDocument();
     expect(getByText('snackbar title')).toBeInTheDocument();
     expect(getByText('snackbar message')).toBeInTheDocument();
   });

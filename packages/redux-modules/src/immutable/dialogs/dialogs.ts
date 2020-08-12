@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { Map, isImmutable } from 'immutable';
+import { Map, isImmutable, merge } from 'immutable';
 
 import {
   INITIALIZE_DIALOG,
@@ -8,6 +8,13 @@ import {
   SET_DIALOG_DATA
 } from '../../dialogs';
 
+type ActionPayload = {
+  name: string;
+};
+
+type Action = {
+  payload: ActionPayload;
+};
 /**
  * Reducer
  */
@@ -15,7 +22,8 @@ export const reducer = handleActions(
   {
     [INITIALIZE_DIALOG]: (state, action) => {
       if (action.payload) {
-        return state.update(action.payload, dialogState => {
+        const dialogName = String(action.payload);
+        return state.update(dialogName, dialogState => {
           if (isImmutable(dialogState)) {
             return dialogState;
           }
@@ -40,11 +48,13 @@ export const reducer = handleActions(
     },
     [SET_DIALOG_DATA]: (state, action) => {
       if (action.payload) {
-        const { name, ...other } = action.payload;
-        return state.update(name, el => el.merge(other));
+        const { name, ...other } = action.payload as any;
+        if (name) {
+          return state.update(name, el => merge(el, other));
+        }
       }
       return state;
     }
   },
-  Map()
+  Map({})
 );

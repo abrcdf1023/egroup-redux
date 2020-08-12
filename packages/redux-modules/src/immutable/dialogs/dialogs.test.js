@@ -85,5 +85,13 @@ describe('dialog reducers', () => {
       })
     );
     expect(reducer(state, setDialogData())).toEqual(state);
+    expect(
+      reducer(
+        fromJS({}),
+        setDialogData({
+          name: name
+        })
+      )
+    ).toEqual(fromJS({}));
   });
 });

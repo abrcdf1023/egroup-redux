@@ -43,7 +43,12 @@ export const dialogs = handleActions(
       if (action.payload) {
         const { name, ...other } = action.payload as any;
         if (name) {
-          return state.update(name, el => merge(el, other));
+          return state.update(name, el => {
+            if (el) {
+              return merge(el, other);
+            }
+            return el;
+          });
         }
       }
       return state;

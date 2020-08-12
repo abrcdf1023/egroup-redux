@@ -88,5 +88,13 @@ describe('snackbar reducers', () => {
       })
     );
     expect(reducer(state, setSnackbarData())).toEqual(state);
+    expect(
+      reducer(
+        fromJS({}),
+        setSnackbarData({
+          name: snackbarName
+        })
+      )
+    ).toEqual(fromJS({}));
   });
 });

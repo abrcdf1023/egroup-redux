@@ -12,6 +12,7 @@ const MockDialog = React.forwardRef(function MockDialog(props, ref) {
   const { isOpen, handleClose, title, message } = props;
   return (
     <div ref={ref}>
+      <p>{String(isOpen)}</p>
       <p>{title}</p>
       <p>{message}</p>
     </div>
@@ -25,7 +26,7 @@ describe('Redux Dialog HOC', () => {
     store = mockStore({
       dialogs: {
         [dialogName]: {
-          isOpen: false,
+          isOpen: true,
           title: 'dialog title',
           message: 'dialog message'
         }
@@ -35,6 +36,7 @@ describe('Redux Dialog HOC', () => {
   it('Should render the component only when dialog prop is true', () => {
     const ReduxDialog = withReduxDialog(dialogName)(MockDialog);
     const { getByText } = render(<ReduxDialog store={store} />);
+    expect(getByText('true')).toBeInTheDocument();
     expect(getByText('dialog title')).toBeInTheDocument();
     expect(getByText('dialog message')).toBeInTheDocument();
   });

@@ -7,7 +7,7 @@ import configureStore from 'redux-mock-store';
 import withReduxDialog from './withReduxDialog';
 
 let store;
-const dialogName = 'alertAialog';
+const name = 'alertAialog';
 
 const MockDialog = React.forwardRef(function MockDialog(props, ref) {
   const { isOpen, handleClose, title, message } = props;
@@ -27,7 +27,7 @@ describe('Redux Dialog HOC', () => {
     store = mockStore(
       fromJS({
         dialogs: {
-          [dialogName]: {
+          [name]: {
             isOpen: true,
             title: 'dialog title',
             message: 'dialog message'
@@ -37,14 +37,14 @@ describe('Redux Dialog HOC', () => {
     );
   });
   it('Should render the component only when dialog prop is true', () => {
-    const ReduxDialog = withReduxDialog(dialogName)(MockDialog);
+    const ReduxDialog = withReduxDialog(name)(MockDialog);
     const { getByText } = render(<ReduxDialog store={store} />);
     expect(getByText('true')).toBeInTheDocument();
     expect(getByText('dialog title')).toBeInTheDocument();
     expect(getByText('dialog message')).toBeInTheDocument();
   });
   it('Should pass ref to Dialog component', () => {
-    const ReduxDialog = withReduxDialog(dialogName)(MockDialog);
+    const ReduxDialog = withReduxDialog(name)(MockDialog);
     const ref = React.createRef(null);
     render(<ReduxDialog ref={ref} store={store} />);
     expect(ref.current).not.toBeNull();

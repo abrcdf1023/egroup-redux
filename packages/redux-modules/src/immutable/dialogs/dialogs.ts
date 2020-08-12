@@ -8,13 +8,6 @@ import {
   SET_DIALOG_DATA
 } from '../../dialogs';
 
-type ActionPayload = {
-  name: string;
-};
-
-type Action = {
-  payload: ActionPayload;
-};
 /**
  * Reducer
  */
@@ -22,8 +15,8 @@ export const reducer = handleActions(
   {
     [INITIALIZE_DIALOG]: (state, action) => {
       if (action.payload) {
-        const dialogName = String(action.payload);
-        return state.update(dialogName, dialogState => {
+        const name = String(action.payload);
+        return state.update(name, dialogState => {
           if (isImmutable(dialogState)) {
             return dialogState;
           }

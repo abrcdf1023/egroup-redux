@@ -11,31 +11,31 @@ import {
   setDialogData
 } from './actions';
 
-const dialogName = 'alertAialog';
+const name = 'alertAialog';
 
 describe('dialog actions', () => {
   it('should create an action to initialize dialog', () => {
     const expectedAction = {
       type: INITIALIZE_DIALOG,
-      payload: dialogName
+      payload: name
     };
-    expect(initializeDialog(dialogName)).toEqual(expectedAction);
+    expect(initializeDialog(name)).toEqual(expectedAction);
   });
 
   it('should create an action to open dialog', () => {
     const expectedAction = {
       type: OPEN_DIALOG,
-      payload: dialogName
+      payload: name
     };
-    expect(openDialog(dialogName)).toEqual(expectedAction);
+    expect(openDialog(name)).toEqual(expectedAction);
   });
 
   it('should create an action to close dialog', () => {
     const expectedAction = {
       type: CLOSE_DIALOG,
-      payload: dialogName
+      payload: name
     };
-    expect(closeDialog(dialogName)).toEqual(expectedAction);
+    expect(closeDialog(name)).toEqual(expectedAction);
   });
 
   it('should create an action to set dialog data', () => {

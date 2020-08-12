@@ -6,7 +6,7 @@ import {
 } from './actions';
 import { reducer } from './dialogs';
 
-const dialogName = 'alertAialog';
+const name = 'alertAialog';
 
 describe('dialog reducers', () => {
   it('should return the initial state', () => {
@@ -16,28 +16,26 @@ describe('dialog reducers', () => {
   it('should handle INITIALIZE_DIALOG', () => {
     const state = {};
     const initializeState = {
-      [dialogName]: {
+      [name]: {
         isOpen: false
       }
     };
-    expect(reducer(state, initializeDialog(dialogName))).toEqual(
-      initializeState
-    );
+    expect(reducer(state, initializeDialog(name))).toEqual(initializeState);
     expect(reducer(state, initializeDialog())).toEqual(state);
     expect(reducer(state, initializeDialog({}))).toEqual(state);
-    expect(reducer(initializeState, initializeDialog(dialogName))).toEqual(
+    expect(reducer(initializeState, initializeDialog(name))).toEqual(
       initializeState
     );
   });
 
   it('should handle OPEN_DIALOG', () => {
     const state = {
-      [dialogName]: {
+      [name]: {
         isOpen: false
       }
     };
-    expect(reducer(state, openDialog(dialogName))).toEqual({
-      [dialogName]: {
+    expect(reducer(state, openDialog(name))).toEqual({
+      [name]: {
         isOpen: true
       }
     });
@@ -47,12 +45,12 @@ describe('dialog reducers', () => {
 
   it('should handle CLOSE_DIALOG', () => {
     const state = {
-      [dialogName]: {
+      [name]: {
         isOpen: true
       }
     };
-    expect(reducer(state, closeDialog(dialogName))).toEqual({
-      [dialogName]: {
+    expect(reducer(state, closeDialog(name))).toEqual({
+      [name]: {
         isOpen: false
       }
     });
@@ -62,7 +60,7 @@ describe('dialog reducers', () => {
 
   it('should handle SET_DIALOG_DATA', () => {
     const state = {
-      [dialogName]: {
+      [name]: {
         isOpen: false
       }
     };
@@ -70,13 +68,13 @@ describe('dialog reducers', () => {
       reducer(
         state,
         setDialogData({
-          name: dialogName,
+          name: name,
           message: 'message',
           title: 'title'
         })
       )
     ).toEqual({
-      [dialogName]: {
+      [name]: {
         isOpen: false,
         message: 'message',
         title: 'title'

@@ -1,10 +1,10 @@
 import { getDialogStates } from './selectors';
 
-const dialogName = 'alertAialog';
+const name = 'alertAialog';
 
 describe('dialog selectors', () => {
   it('should get default dialog states when dialog is undefined.', () => {
-    expect(getDialogStates({}, null, dialogName)).toEqual({
+    expect(getDialogStates({}, null, name)).toEqual({
       isOpen: false
     });
   });
@@ -16,10 +16,10 @@ describe('dialog selectors', () => {
   };
   const state = {
     dialogs: {
-      [dialogName]: dialogStates
+      [name]: dialogStates
     }
   };
   it('should get dialog states by dialog name', () => {
-    expect(getDialogStates(state, null, dialogName)).toEqual(dialogStates);
+    expect(getDialogStates(state, null, name)).toEqual(dialogStates);
   });
 });

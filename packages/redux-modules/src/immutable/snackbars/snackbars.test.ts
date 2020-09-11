@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 
 import {
   initializeSnackbar,
@@ -12,7 +12,9 @@ const name = 'globalSnackbar';
 
 describe('snackbar reducers', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual(fromJS({}));
+    expect(reducer(undefined, { type: '', payload: Map({}) })).toEqual(
+      fromJS({})
+    );
   });
 
   it('should handle INITIALIZE_SNACKBAR', () => {

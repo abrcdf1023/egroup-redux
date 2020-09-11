@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { initializeSnackbar, closeSnackbar } from './actions';
 import { getSnackbarStates } from './selectors';
 
-export interface OwnProps {
+interface OwnProps {
   onClose: (event: any) => void;
 }
 
-export interface DispatchProps {
+interface DispatchProps {
   initializeSnackbar: (name: string) => void;
   closeSnackbar: (name: string) => void;
 }
 
-export interface StateProps {
+interface StateProps {
   isOpen: boolean;
 }
 

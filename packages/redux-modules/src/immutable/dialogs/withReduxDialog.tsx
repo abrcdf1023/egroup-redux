@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { initializeDialog, closeDialog } from '../../dialogs/actions';
 import { getDialogStates } from './selectors';
 
-export interface OwnProps {
+interface OwnProps {
   handleClose: () => void;
 }
 
-export interface DispatchProps {
+interface DispatchProps {
   initializeDialog: (name: string) => void;
   closeDialog: (name: string) => void;
 }
 
-export interface StateProps {
+interface StateProps {
   isOpen: boolean;
 }
 

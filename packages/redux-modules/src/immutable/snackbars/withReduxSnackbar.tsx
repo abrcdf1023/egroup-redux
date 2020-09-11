@@ -17,6 +17,8 @@ export interface StateProps {
   isOpen: boolean;
 }
 
+export type WithReduxSnackbarProps = StateProps & DispatchProps & OwnProps;
+
 /**
  * Please read this article for more info.
  * https://medium.com/@martin_hotell/react-refs-with-typescript-a32d56c4d315
@@ -30,7 +32,7 @@ const withReduxSnackbar = (name: string) => <
 ) => {
   type PrivateProps = { forwardedRef: RefObject<T> };
 
-  type Props = StateProps & DispatchProps & OwnProps & PrivateProps;
+  type Props = WithReduxSnackbarProps & PrivateProps;
 
   class WithReduxSnackbar extends Component<Props> {
     componentDidMount() {

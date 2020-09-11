@@ -1,24 +1,32 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import React from 'react';
+import React, { createRef, forwardRef } from 'react';
 import { render } from '@testing-library/react';
 import { fromJS } from 'immutable';
 import configureStore from 'redux-mock-store';
-import withReduxDialog from './withReduxDialog';
+import withReduxDialog, { WithReduxDialogProps } from './withReduxDialog';
 
 let store;
 const name = 'alertAialog';
 
-const MockDialog = React.forwardRef(function MockDialog(props, ref) {
-  const { isOpen, handleClose, title, message } = props;
-  return (
-    <div ref={ref}>
-      <p>{String(isOpen)}</p>
-      <p>{title}</p>
-      <p>{message}</p>
-    </div>
-  );
-});
+interface MockDialogProps extends WithReduxDialogProps {
+  title: string;
+  message: string;
+}
+
+const MockDialog = forwardRef<HTMLDivElement, MockDialogProps>(
+  function MockDialog(props, ref) {
+    const { isOpen, handleClose, title, message } = props;
+    return (
+      <div ref={ref}>
+        <p>{String(isOpen)}</p>
+        <p>{title}</p>
+        <p>{message}</p>
+        <button onClick={handleClose}>close</button>
+      </div>
+    );
+  }
+);
 
 describe('Redux Dialog HOC', () => {
   beforeEach(() => {
@@ -37,15 +45,25 @@ describe('Redux Dialog HOC', () => {
     );
   });
   it('Should render the component only when dialog prop is true', () => {
-    const ReduxDialog = withReduxDialog(name)(MockDialog);
+    const ReduxDialog = withReduxDialog(name)<
+      HTMLDivElement,
+      {
+        store: any;
+      }
+    >(MockDialog);
     const { getByText } = render(<ReduxDialog store={store} />);
     expect(getByText('true')).toBeInTheDocument();
     expect(getByText('dialog title')).toBeInTheDocument();
     expect(getByText('dialog message')).toBeInTheDocument();
   });
   it('Should pass ref to Dialog component', () => {
-    const ReduxDialog = withReduxDialog(name)(MockDialog);
-    const ref = React.createRef(null);
+    const ReduxDialog = withReduxDialog(name)<
+      HTMLDivElement,
+      {
+        store: any;
+      }
+    >(MockDialog);
+    const ref = createRef<HTMLDivElement>();
     render(<ReduxDialog ref={ref} store={store} />);
     expect(ref.current).not.toBeNull();
   });

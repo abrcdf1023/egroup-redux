@@ -5,7 +5,7 @@ import { initializeSnackbar, closeSnackbar } from './actions';
 import { getSnackbarStates } from './selectors';
 
 export interface OwnProps {
-  onClose: (event: Event) => void;
+  onClose: (event: any) => void;
 }
 
 export interface DispatchProps {
@@ -24,10 +24,7 @@ export type WithReduxSnackbarProps = StateProps & DispatchProps & OwnProps;
  * https://medium.com/@martin_hotell/react-refs-with-typescript-a32d56c4d315
  * @param name
  */
-const withReduxSnackbar = (name: string) => <
-  T extends Component,
-  OriginalProps extends {}
->(
+const withReduxSnackbar = (name: string) => <T, OriginalProps extends {}>(
   WrappedComponent: ComponentType<any | string>
 ) => {
   type PrivateProps = { forwardedRef: RefObject<T> };
@@ -47,7 +44,7 @@ const withReduxSnackbar = (name: string) => <
         ...other
       } = this.props;
 
-      const handleClose = (e: Event) => {
+      const handleClose = (e: any) => {
         if (onClose) {
           onClose(e);
         }
@@ -80,7 +77,7 @@ const withReduxSnackbar = (name: string) => <
    * Forwarding refs in higher-order components
    * https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components
    */
-  function RefForwardingFactory(props: any, ref: T) {
+  function RefForwardingFactory(props: any, ref: RefObject<T>) {
     return <ConnectedComponent {...props} forwardedRef={ref} />;
   }
 
@@ -88,7 +85,7 @@ const withReduxSnackbar = (name: string) => <
   const componentName = WrappedComponent.displayName || WrappedComponent.name;
   RefForwardingFactory.displayName = `withReduxSnackbar(${componentName})`;
 
-  return forwardRef<T, OriginalProps>(RefForwardingFactory as any);
+  return forwardRef<T, OriginalProps>(RefForwardingFactory);
 };
 
 export default withReduxSnackbar;

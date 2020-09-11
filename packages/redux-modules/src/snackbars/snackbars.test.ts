@@ -10,7 +10,7 @@ const name = 'globalSnackbar';
 
 describe('snackbar reducers', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual({});
+    expect(reducer(undefined, { type: '', payload: {} })).toEqual({});
   });
 
   it('should handle INITIALIZE_SNACKBAR', () => {

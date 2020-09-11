@@ -3,9 +3,8 @@
  * Example,
  * FETCH_GET_USER -> ['get', undefined]
  * FETCH_GET_USER_REQUEST -> ['get', 'request']
- * @param {string} api
  */
-export default function getApiInfos(api) {
+export default function getApiInfos(api: string) {
   let apiMethod;
   let apiType;
   const array = api.split(/(?=[A-Z])/);

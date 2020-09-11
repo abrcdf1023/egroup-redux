@@ -15,7 +15,10 @@ type ObjectType =
  * @param {any} variable
  * @param {array} supportedTypes ["object", "null", "array", "boolean", "string", "bigint", "function", "number", "symbol", "undefined"]
  */
-export default function supportedTypes(variable: any, supportedTypes: []) {
+export default function supportedTypes(
+  variable: any,
+  supportedTypes: ObjectType[]
+) {
   let objType: ObjectType = typeof variable;
   if (objType === 'object') {
     if (variable === null) {

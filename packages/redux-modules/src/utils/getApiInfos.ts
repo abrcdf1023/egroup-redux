@@ -5,10 +5,9 @@
  * FETCH_GET_USER_REQUEST -> ['get', 'request']
  */
 export default function getApiInfos(api: string) {
-  let apiMethod;
-  let apiType;
+  let apiType: string | undefined;
   const array = api.split(/(?=[A-Z])/);
-  apiMethod = array[1];
+  const apiMethod = array[1];
   apiType = array[array.length - 1].toLowerCase();
   if (
     apiType !== 'request' &&

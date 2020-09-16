@@ -9,7 +9,7 @@ import {
   EG_API_REQUEST,
   EG_API_CANCEL,
   EG_API_SUCCESS,
-  EG_API_FAILURE
+  EG_API_FAILURE,
 } from '../apis/types';
 
 const mockStore = configureStore([createHandleApisMiddleware(), thunk]);
@@ -21,9 +21,9 @@ const actionCreator = createActions({
       FETCH_GET_MEMBER_REQUEST: undefined,
       FETCH_GET_MEMBER_CANCEL: undefined,
       FETCH_GET_MEMBER_SUCCESS: undefined,
-      FETCH_GET_MEMBER_FAILURE: undefined
-    }
-  }
+      FETCH_GET_MEMBER_FAILURE: undefined,
+    },
+  },
 });
 
 const {
@@ -31,7 +31,7 @@ const {
   fetchGetMemberRequest,
   fetchGetMemberCancel,
   fetchGetMemberSuccess,
-  fetchGetMemberFailure
+  fetchGetMemberFailure,
 } = actionCreator.components.list;
 
 describe('createHandleApisMiddleware', () => {
@@ -42,13 +42,13 @@ describe('createHandleApisMiddleware', () => {
   it('should dispatch none fetch action', () => {
     const store = mockStore(Map());
     store.dispatch({
-      type: 'CLOSE_WINDOW'
+      type: 'CLOSE_WINDOW',
     });
     const actions = store.getActions();
     const expected = [
       {
-        type: 'CLOSE_WINDOW'
-      }
+        type: 'CLOSE_WINDOW',
+      },
     ];
     expect(actions).toEqual(expected);
   });
@@ -61,10 +61,10 @@ describe('createHandleApisMiddleware', () => {
       {
         type: EG_API_TAKE,
         payload: {
-          leafs: ['components', 'list', 'fetchGetMember']
-        }
+          leafs: ['components', 'list', 'fetchGetMember'],
+        },
       },
-      fetchGetMember()
+      fetchGetMember(),
     ];
     expect(actions).toEqual(expected);
   });
@@ -77,10 +77,10 @@ describe('createHandleApisMiddleware', () => {
       {
         type: EG_API_REQUEST,
         payload: {
-          leafs: ['components', 'list', 'fetchGetMember']
-        }
+          leafs: ['components', 'list', 'fetchGetMember'],
+        },
       },
-      fetchGetMemberRequest()
+      fetchGetMemberRequest(),
     ];
     expect(actions).toEqual(expected);
   });
@@ -93,10 +93,10 @@ describe('createHandleApisMiddleware', () => {
       {
         type: EG_API_CANCEL,
         payload: {
-          leafs: ['components', 'list', 'fetchGetMember']
-        }
+          leafs: ['components', 'list', 'fetchGetMember'],
+        },
       },
-      fetchGetMemberCancel()
+      fetchGetMemberCancel(),
     ];
     expect(actions).toEqual(expected);
   });
@@ -109,10 +109,10 @@ describe('createHandleApisMiddleware', () => {
       {
         type: EG_API_SUCCESS,
         payload: {
-          leafs: ['components', 'list', 'fetchGetMember']
-        }
+          leafs: ['components', 'list', 'fetchGetMember'],
+        },
       },
-      fetchGetMemberSuccess()
+      fetchGetMemberSuccess(),
     ];
     expect(actions).toEqual(expected);
   });
@@ -125,92 +125,96 @@ describe('createHandleApisMiddleware', () => {
       {
         type: EG_API_FAILURE,
         payload: {
-          leafs: ['components', 'list', 'fetchGetMember']
-        }
+          leafs: ['components', 'list', 'fetchGetMember'],
+        },
       },
-      fetchGetMemberFailure()
+      fetchGetMemberFailure(),
     ];
     expect(actions).toEqual(expected);
   });
 
-  it('should fetch member success', done => {
-    const data = { memberId: 11111 };
-    const store = mockStore(Map());
-    const expectedActions = [
-      {
-        type: EG_API_TAKE,
-        payload: {
-          leafs: ['components', 'list', 'fetchGetMember']
-        }
-      },
-      fetchGetMember(),
-      {
-        type: EG_API_REQUEST,
-        payload: {
-          leafs: ['components', 'list', 'fetchGetMember']
-        }
-      },
-      fetchGetMemberRequest(),
-      {
-        type: EG_API_SUCCESS,
-        payload: {
-          leafs: ['components', 'list', 'fetchGetMember'],
-          response: data
-        }
-      },
-      fetchGetMemberSuccess(data)
-    ];
+  it('should fetch member success', () => {
+    return new Promise((resolve) => {
+      const data = { memberId: 11111 };
+      const store = mockStore(Map());
+      const expectedActions = [
+        {
+          type: EG_API_TAKE,
+          payload: {
+            leafs: ['components', 'list', 'fetchGetMember'],
+          },
+        },
+        fetchGetMember(),
+        {
+          type: EG_API_REQUEST,
+          payload: {
+            leafs: ['components', 'list', 'fetchGetMember'],
+          },
+        },
+        fetchGetMemberRequest(),
+        {
+          type: EG_API_SUCCESS,
+          payload: {
+            leafs: ['components', 'list', 'fetchGetMember'],
+            response: data,
+          },
+        },
+        fetchGetMemberSuccess(data),
+      ];
 
-    fetchMock.get('http://good.com/', data);
+      fetchMock.get('http://good.com/', data);
 
-    store.dispatch(fetchGetMember());
-    store.dispatch(fetchGetMemberRequest());
-    fetch('http://good.com/')
-      .then(res => res.json())
-      .then(data => {
-        store.dispatch(fetchGetMemberSuccess(data));
-        expect(store.getActions()).toEqual(expectedActions);
-        done();
-      });
+      store.dispatch(fetchGetMember());
+      store.dispatch(fetchGetMemberRequest());
+      fetch('http://good.com/')
+        .then((res) => res.json())
+        .then((data) => {
+          store.dispatch(fetchGetMemberSuccess(data));
+          expect(store.getActions()).toEqual(expectedActions);
+          resolve();
+        });
+    });
   });
 
-  it('should fetch member failure', done => {
-    const store = mockStore(Map());
-    const expectedActions = [
-      {
-        type: EG_API_TAKE,
-        payload: {
-          leafs: ['components', 'list', 'fetchGetMember']
-        }
-      },
-      fetchGetMember(),
-      {
-        type: EG_API_REQUEST,
-        payload: {
-          leafs: ['components', 'list', 'fetchGetMember']
-        }
-      },
-      fetchGetMemberRequest(),
-      {
-        type: EG_API_FAILURE,
-        payload: {
-          leafs: ['components', 'list', 'fetchGetMember'],
-          error: new TypeError('Failed to fetch')
-        }
-      },
-      fetchGetMemberFailure(new TypeError('Failed to fetch'))
-    ];
+  it('should fetch member failure', () => {
+    return new Promise((resolve) => {
+      const store = mockStore(Map());
+      const expectedActions = [
+        {
+          type: EG_API_TAKE,
+          payload: {
+            leafs: ['components', 'list', 'fetchGetMember'],
+          },
+        },
+        fetchGetMember(),
+        {
+          type: EG_API_REQUEST,
+          payload: {
+            leafs: ['components', 'list', 'fetchGetMember'],
+          },
+        },
+        fetchGetMemberRequest(),
+        {
+          type: EG_API_FAILURE,
+          payload: {
+            leafs: ['components', 'list', 'fetchGetMember'],
+            error: new TypeError('Failed to fetch'),
+          },
+        },
+        fetchGetMemberFailure(new TypeError('Failed to fetch')),
+      ];
 
-    fetchMock.get('http://good.com/', {
-      throws: new TypeError('Failed to fetch')
-    });
+      fetchMock.get('http://good.com/', {
+        throws: new TypeError('Failed to fetch'),
+      });
 
-    store.dispatch(fetchGetMember());
-    store.dispatch(fetchGetMemberRequest());
-    fetch('http://good.com/').catch(error => {
-      store.dispatch(fetchGetMemberFailure(error));
-      expect(store.getActions()).toEqual(expectedActions);
-      done();
+      store.dispatch(fetchGetMember());
+      store.dispatch(fetchGetMemberRequest());
+      fetch('http://good.com/').catch((error) => {
+        store.dispatch(fetchGetMemberFailure(error));
+        expect(store.getActions()).toEqual(expectedActions);
+        resolve();
+      });
     });
   });
 });

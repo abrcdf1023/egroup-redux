@@ -1,15 +1,14 @@
 import { handleActions } from 'redux-actions';
-import { fromJS, Map } from 'immutable';
-import { List } from 'immutable';
+import { fromJS, Map, List } from 'immutable';
 
 import {
   SET_ENTITIES,
   SET_ENTITIES_SHALLOW,
   SET_ENTITIES_ARRAY_CONCAT,
-  DELETE_ENTITIES_IN
+  DELETE_ENTITIES_IN,
 } from '../../entities';
 
-const isList = List.isList;
+const { isList } = List;
 
 function merger(a, b) {
   if (a && a.mergeWith && !isList(a) && !isList(b)) {
@@ -63,7 +62,7 @@ export const reducer = handleActions(
         return state.deleteIn(action.payload);
       }
       return state;
-    }
+    },
   },
   fromJS({})
 );

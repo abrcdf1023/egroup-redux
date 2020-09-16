@@ -1,9 +1,9 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import {
   initializeDialog,
   openDialog,
   closeDialog,
-  setDialogData
+  setDialogData,
 } from '../../dialogs';
 import { dialogs as reducer } from './dialogs';
 
@@ -11,15 +11,17 @@ const name = 'alertAialog';
 
 describe('dialog reducers', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual(fromJS({}));
+    expect(reducer(undefined, { type: '', payload: Map({}) })).toEqual(
+      fromJS({})
+    );
   });
 
   it('should handle INITIALIZE_DIALOG', () => {
     const state = fromJS({});
     const initializeState = fromJS({
       [name]: {
-        isOpen: false
-      }
+        isOpen: false,
+      },
     });
     expect(reducer(state, initializeDialog(name))).toEqual(initializeState);
     expect(reducer(state, initializeDialog())).toEqual(state);
@@ -31,14 +33,14 @@ describe('dialog reducers', () => {
   it('should handle OPEN_DIALOG', () => {
     const state = fromJS({
       [name]: {
-        isOpen: false
-      }
+        isOpen: false,
+      },
     });
     expect(reducer(state, openDialog(name))).toEqual(
       fromJS({
         [name]: {
-          isOpen: true
-        }
+          isOpen: true,
+        },
       })
     );
     expect(reducer(state, openDialog())).toEqual(state);
@@ -47,14 +49,14 @@ describe('dialog reducers', () => {
   it('should handle CLOSE_DIALOG', () => {
     const state = fromJS({
       [name]: {
-        isOpen: true
-      }
+        isOpen: true,
+      },
     });
     expect(reducer(state, closeDialog(name))).toEqual(
       fromJS({
         [name]: {
-          isOpen: false
-        }
+          isOpen: false,
+        },
       })
     );
     expect(reducer(state, closeDialog())).toEqual(state);
@@ -63,16 +65,16 @@ describe('dialog reducers', () => {
   it('should handle SET_DIALOG_DATA', () => {
     const state = fromJS({
       [name]: {
-        isOpen: false
-      }
+        isOpen: false,
+      },
     });
     expect(
       reducer(
         state,
         setDialogData({
-          name: name,
+          name,
           message: 'message',
-          title: 'title'
+          title: 'title',
         })
       )
     ).toEqual(
@@ -80,8 +82,8 @@ describe('dialog reducers', () => {
         [name]: {
           isOpen: false,
           message: 'message',
-          title: 'title'
-        }
+          title: 'title',
+        },
       })
     );
     expect(reducer(state, setDialogData())).toEqual(state);
@@ -89,7 +91,7 @@ describe('dialog reducers', () => {
       reducer(
         fromJS({}),
         setDialogData({
-          name: name
+          name,
         })
       )
     ).toEqual(fromJS({}));

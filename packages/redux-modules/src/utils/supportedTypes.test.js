@@ -30,11 +30,13 @@ describe('supportedTypes', () => {
     const [isSupported, type] = supportedTypes(null, ['array', 'object']);
     expect(isSupported).toEqual(false);
     expect(type).toEqual('null');
-  });
-  it('should return false and null type', () => {
-    const [isSupported, type] = supportedTypes(null, ['object', 'array']);
-    expect(isSupported).toEqual(false);
-    expect(type).toEqual('null');
+
+    const [isSupportedRevert, typeRevert] = supportedTypes(null, [
+      'object',
+      'array',
+    ]);
+    expect(isSupportedRevert).toEqual(false);
+    expect(typeRevert).toEqual('null');
   });
 
   it('should return true and boolean type', () => {
@@ -50,7 +52,7 @@ describe('supportedTypes', () => {
   it('should return true and undefined type', () => {
     const [isSupported, type] = supportedTypes(undefined, [
       'number',
-      'undefined'
+      'undefined',
     ]);
     expect(isSupported).toEqual(true);
     expect(type).toEqual('undefined');
@@ -63,7 +65,7 @@ describe('supportedTypes', () => {
   it('should return true and function type', () => {
     const [isSupported, type] = supportedTypes(() => {}, [
       'string',
-      'function'
+      'function',
     ]);
     expect(isSupported).toEqual(true);
     expect(type).toEqual('function');

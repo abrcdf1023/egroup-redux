@@ -1,11 +1,18 @@
-import React, { ComponentType, Component, RefObject, forwardRef } from 'react';
+import React, {
+  ComponentType,
+  forwardRef,
+  PropsWithChildren,
+  MutableRefObject,
+  FC,
+  useEffect,
+} from 'react';
 import { connect } from 'react-redux';
 
 import { initializeDialog, closeDialog } from '../../dialogs/actions';
 import { getDialogStates } from './selectors';
 
 interface OwnProps {
-  handleClose: () => void;
+  handleClose?: () => void;
 }
 
 interface DispatchProps {
@@ -24,50 +31,57 @@ export type WithReduxDialogProps = StateProps & DispatchProps & OwnProps;
  * https://medium.com/@martin_hotell/react-refs-with-typescript-a32d56c4d315
  * @param name
  */
-const withReduxDialog = (name: string) => <T, OriginalProps extends {}>(
+const withReduxDialog = (name: string) => <
+  T,
+  OriginalProps extends Record<string, unknown>
+>(
   WrappedComponent: ComponentType<any | string>
 ) => {
-  type PrivateProps = { forwardedRef: RefObject<T> };
+  type ForwardedRef =
+    | ((instance: T | null) => void)
+    | MutableRefObject<T | null>
+    | null;
+  type PrivateProps = { forwardedRef: ForwardedRef };
 
   type Props = WithReduxDialogProps & PrivateProps;
 
-  class WithReduxDialog extends Component<Props> {
-    componentDidMount() {
-      this.props.initializeDialog(name);
-    }
-    render() {
-      const {
-        forwardedRef,
-        initializeDialog,
-        handleClose,
-        closeDialog,
-        ...other
-      } = this.props;
-      return (
-        <WrappedComponent
-          ref={forwardedRef}
-          handleClose={() => {
-            closeDialog(name);
-          }}
-          {...other}
-        />
-      );
-    }
-  }
+  const WithReduxDialog: FC<Props> = (props) => {
+    const {
+      forwardedRef,
+      initializeDialog,
+      handleClose,
+      closeDialog,
+      ...other
+    } = props;
+
+    useEffect(() => {
+      initializeDialog(name);
+    }, []);
+
+    return (
+      <WrappedComponent
+        ref={forwardedRef}
+        handleClose={() => {
+          closeDialog(name);
+        }}
+        {...other}
+      />
+    );
+  };
 
   /**
    * Connect before forwardRef
    * https://github.com/reduxjs/react-redux/issues/914
    */
   const mapStateToProps = (state: any, ownProps: OwnProps): StateProps => ({
-    ...getDialogStates(state, ownProps, name).toJS()
+    ...getDialogStates(state, ownProps, name).toJS(),
   });
 
   const ConnectedComponent = connect<StateProps, DispatchProps, OwnProps>(
     mapStateToProps,
     {
       initializeDialog,
-      closeDialog
+      closeDialog,
     }
   )(WithReduxDialog);
 
@@ -75,7 +89,10 @@ const withReduxDialog = (name: string) => <T, OriginalProps extends {}>(
    * Forwarding refs in higher-order components
    * https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components
    */
-  function RefForwardingFactory(props: any, ref: RefObject<T>) {
+  function RefForwardingFactory(
+    props: PropsWithChildren<OriginalProps>,
+    ref: ForwardedRef
+  ) {
     return <ConnectedComponent {...props} forwardedRef={ref} />;
   }
 

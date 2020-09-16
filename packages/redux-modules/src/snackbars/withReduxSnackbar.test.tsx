@@ -1,5 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
-
 import React, { createRef, forwardRef } from 'react';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
@@ -15,13 +13,13 @@ interface MockSnackbarProps extends WithReduxSnackbarProps {
 
 const MockSnackbar = forwardRef<HTMLDivElement, MockSnackbarProps>(
   function MockSnackbar(props, ref) {
-    const { isOpen, title, onClose, message } = props;
+    const { isOpen, title, handleClose, message } = props;
     return (
       <div ref={ref}>
         <p>{String(isOpen)}</p>
         <p>{title}</p>
         <p>{message}</p>
-        <button onClick={onClose}>close</button>
+        <button onClick={handleClose}>close</button>
       </div>
     );
   }
@@ -36,9 +34,9 @@ describe('Redux Snackbar HOC', () => {
         [name]: {
           isOpen: true,
           title: 'snackbar title',
-          message: 'snackbar message'
-        }
-      }
+          message: 'snackbar message',
+        },
+      },
     });
   });
   it('Should render the component only when snackbar prop is true', () => {

@@ -1,5 +1,5 @@
-import { getEntities } from './selectors';
 import { fromJS } from 'immutable';
+import { getEntities } from './selectors';
 
 const defaultEntities = {
   users: {
@@ -9,17 +9,17 @@ const defaultEntities = {
       roles: {
         admin: {
           roleName: 'admin',
-          roleStatus: 'checked'
-        }
-      }
-    }
-  }
+          roleStatus: 'checked',
+        },
+      },
+    },
+  },
 };
 
 describe('entities selectors', () => {
   const rootStates = fromJS(defaultEntities);
   const state = fromJS({
-    entities: defaultEntities
+    entities: defaultEntities,
   });
   it('should get entities', () => {
     expect(getEntities(state)).toEqual(rootStates);

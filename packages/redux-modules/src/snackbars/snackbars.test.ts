@@ -2,7 +2,7 @@ import {
   initializeSnackbar,
   openSnackbar,
   closeSnackbar,
-  setSnackbarData
+  setSnackbarData,
 } from './actions';
 import { snackbars as reducer } from './snackbars';
 
@@ -17,8 +17,8 @@ describe('snackbar reducers', () => {
     const state = {};
     const initializeState = {
       [name]: {
-        isOpen: false
-      }
+        isOpen: false,
+      },
     };
     expect(reducer(state, initializeSnackbar(name))).toEqual(initializeState);
     expect(reducer(state, initializeSnackbar())).toEqual(state);
@@ -31,13 +31,13 @@ describe('snackbar reducers', () => {
   it('should handle OPEN_SNACKBAR', () => {
     const state = {
       [name]: {
-        isOpen: false
-      }
+        isOpen: false,
+      },
     };
     expect(reducer(state, openSnackbar(name))).toEqual({
       [name]: {
-        isOpen: true
-      }
+        isOpen: true,
+      },
     });
     expect(reducer(state, openSnackbar())).toEqual(state);
     expect(reducer(state, openSnackbar({}))).toEqual(state);
@@ -47,13 +47,13 @@ describe('snackbar reducers', () => {
   it('should handle CLOSE_SNACKBAR', () => {
     const state = {
       [name]: {
-        isOpen: true
-      }
+        isOpen: true,
+      },
     };
     expect(reducer(state, closeSnackbar(name))).toEqual({
       [name]: {
-        isOpen: false
-      }
+        isOpen: false,
+      },
     });
     expect(reducer(state, closeSnackbar())).toEqual(state);
     expect(reducer(state, closeSnackbar({}))).toEqual(state);
@@ -63,24 +63,24 @@ describe('snackbar reducers', () => {
   it('should handle SET_SNACKBAR_DATA', () => {
     const state = {
       [name]: {
-        isOpen: false
-      }
+        isOpen: false,
+      },
     };
     expect(
       reducer(
         state,
         setSnackbarData({
-          name: name,
+          name,
           message: 'message',
-          title: 'title'
+          title: 'title',
         })
       )
     ).toEqual({
       [name]: {
         isOpen: false,
         message: 'message',
-        title: 'title'
-      }
+        title: 'title',
+      },
     });
     expect(reducer(state, setSnackbarData())).toEqual(state);
     expect(reducer(state, setSnackbarData('foo'))).toEqual(state);
@@ -88,7 +88,7 @@ describe('snackbar reducers', () => {
       reducer(
         {},
         setSnackbarData({
-          name: name
+          name,
         })
       )
     ).toEqual({});

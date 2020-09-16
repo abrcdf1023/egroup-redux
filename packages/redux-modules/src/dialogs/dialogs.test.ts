@@ -2,7 +2,7 @@ import {
   initializeDialog,
   openDialog,
   closeDialog,
-  setDialogData
+  setDialogData,
 } from './actions';
 import { dialogs as reducer } from './dialogs';
 
@@ -17,8 +17,8 @@ describe('dialog reducers', () => {
     const state = {};
     const initializeState = {
       [name]: {
-        isOpen: false
-      }
+        isOpen: false,
+      },
     };
     expect(reducer(state, initializeDialog(name))).toEqual(initializeState);
     expect(reducer(state, initializeDialog())).toEqual(state);
@@ -31,13 +31,13 @@ describe('dialog reducers', () => {
   it('should handle OPEN_DIALOG', () => {
     const state = {
       [name]: {
-        isOpen: false
-      }
+        isOpen: false,
+      },
     };
     expect(reducer(state, openDialog(name))).toEqual({
       [name]: {
-        isOpen: true
-      }
+        isOpen: true,
+      },
     });
     expect(reducer(state, openDialog())).toEqual(state);
     expect(reducer(state, openDialog({}))).toEqual(state);
@@ -47,13 +47,13 @@ describe('dialog reducers', () => {
   it('should handle CLOSE_DIALOG', () => {
     const state = {
       [name]: {
-        isOpen: true
-      }
+        isOpen: true,
+      },
     };
     expect(reducer(state, closeDialog(name))).toEqual({
       [name]: {
-        isOpen: false
-      }
+        isOpen: false,
+      },
     });
     expect(reducer(state, closeDialog())).toEqual(state);
     expect(reducer(state, closeDialog({}))).toEqual(state);
@@ -63,24 +63,24 @@ describe('dialog reducers', () => {
   it('should handle SET_DIALOG_DATA', () => {
     const state = {
       [name]: {
-        isOpen: false
-      }
+        isOpen: false,
+      },
     };
     expect(
       reducer(
         state,
         setDialogData({
-          name: name,
+          name,
           message: 'message',
-          title: 'title'
+          title: 'title',
         })
       )
     ).toEqual({
       [name]: {
         isOpen: false,
         message: 'message',
-        title: 'title'
-      }
+        title: 'title',
+      },
     });
     expect(reducer(state, setDialogData())).toEqual(state);
     expect(reducer(state, setDialogData('foo'))).toEqual(state);
@@ -88,7 +88,7 @@ describe('dialog reducers', () => {
       reducer(
         {},
         setDialogData({
-          name: name
+          name,
         })
       )
     ).toEqual({});

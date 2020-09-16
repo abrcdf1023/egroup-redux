@@ -1,5 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
-
 import React, { createRef, forwardRef } from 'react';
 import { render } from '@testing-library/react';
 import { fromJS } from 'immutable';
@@ -38,9 +36,9 @@ describe('Redux Dialog HOC', () => {
           [name]: {
             isOpen: true,
             title: 'dialog title',
-            message: 'dialog message'
-          }
-        }
+            message: 'dialog message',
+          },
+        },
       })
     );
   });

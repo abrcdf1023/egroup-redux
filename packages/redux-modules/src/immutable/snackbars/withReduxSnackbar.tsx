@@ -1,11 +1,18 @@
-import React, { ComponentType, Component, RefObject, forwardRef } from 'react';
+import React, {
+  ComponentType,
+  forwardRef,
+  MutableRefObject,
+  PropsWithChildren,
+  useEffect,
+  FC,
+} from 'react';
 import { connect } from 'react-redux';
 
 import { initializeSnackbar, closeSnackbar } from '../../snackbars/actions';
 import { getSnackbarStates } from './selectors';
 
 interface OwnProps {
-  handleClose: () => void;
+  handleClose?: () => void;
 }
 
 interface DispatchProps {
@@ -24,51 +31,61 @@ export type WithReduxSnackbarProps = StateProps & DispatchProps & OwnProps;
  * https://medium.com/@martin_hotell/react-refs-with-typescript-a32d56c4d315
  * @param name
  */
-const withReduxSnackbar = (name: string) => <T, OriginalProps extends {}>(
+const withReduxSnackbar = (name: string) => <
+  T,
+  OriginalProps extends Record<string, unknown>
+>(
   WrappedComponent: ComponentType<any | string>
 ) => {
-  type PrivateProps = { forwardedRef: RefObject<T> };
+  type ForwardedRef =
+    | ((instance: T | null) => void)
+    | MutableRefObject<T | null>
+    | null;
+  type PrivateProps = { forwardedRef: ForwardedRef };
 
   type Props = WithReduxSnackbarProps & PrivateProps;
 
-  class WithReduxSnackbar extends Component<Props> {
-    componentDidMount() {
-      this.props.initializeSnackbar(name);
-    }
-    render() {
-      const {
-        forwardedRef,
-        initializeSnackbar,
-        handleClose,
-        closeSnackbar,
-        ...other
-      } = this.props;
+  const WithReduxSnackbar: FC<Props> = (props) => {
+    const {
+      forwardedRef,
+      initializeSnackbar,
+      handleClose,
+      closeSnackbar,
+      ...other
+    } = props;
 
-      return (
-        <WrappedComponent
-          ref={forwardedRef}
-          handleClose={() => {
+    useEffect(() => {
+      initializeSnackbar(name);
+    }, []);
+
+    return (
+      <WrappedComponent
+        ref={forwardedRef}
+        handleClose={() => {
+          if (handleClose) {
+            handleClose();
+          } else {
             closeSnackbar(name);
-          }}
-          {...other}
-        />
-      );
-    }
-  }
+          }
+        }}
+        {...other}
+      />
+    );
+  };
 
   /**
    * Connect before forwardRef
    * https://github.com/reduxjs/react-redux/issues/914
    */
   const mapStateToProps = (state: any, ownProps: OwnProps): StateProps => ({
-    ...getSnackbarStates(state, ownProps, name).toJS()
+    ...getSnackbarStates(state, ownProps, name).toJS(),
   });
 
   const ConnectedComponent = connect<StateProps, DispatchProps, OwnProps>(
     mapStateToProps,
     {
       initializeSnackbar,
-      closeSnackbar
+      closeSnackbar,
     }
   )(WithReduxSnackbar);
 
@@ -76,7 +93,10 @@ const withReduxSnackbar = (name: string) => <T, OriginalProps extends {}>(
    * Forwarding refs in higher-order components
    * https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components
    */
-  function RefForwardingFactory(props: any, ref: RefObject<T>) {
+  function RefForwardingFactory(
+    props: PropsWithChildren<OriginalProps>,
+    ref: ForwardedRef
+  ) {
     return <ConnectedComponent {...props} forwardedRef={ref} />;
   }
 

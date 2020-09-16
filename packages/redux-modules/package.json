@@ -22,8 +22,8 @@
     "test": "jest",
     "clean": "rimraf build",
     "build": "yarn clean && yarn build:esm && yarn build:tsd && yarn build:copy-files",
-    "build:tsd": "tsc ./src/index.ts --declaration --jsx react --esModuleInterop --emitDeclarationOnly && tsc ./src/immutable/index.ts --declaration --jsx react --esModuleInterop --emitDeclarationOnly",
-    "build:esm": "babel --config-file ../../babel.config.js ./src --out-dir ./build --extensions .js,.ts,.tsx",
+    "build:tsd": "tsc -p ../../tsconfig.build.json",
+    "build:esm": "babel --config-file ../../babel.config.js ./src --out-dir ./build --extensions .js,.ts,.jsx,.tsx",
     "build:copy-files": "node ../../scripts/copy-files.js",
     "prepare": "yarn build"
   },

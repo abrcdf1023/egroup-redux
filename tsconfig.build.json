@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": "./packages",
+    "paths": {
+      "@e-group/redux-modules/*": ["packages/redux-modules/src/*"]
+    },
+    "esModuleInterop": true,
+    "declaration": true,
+    "emitDeclarationOnly": true
+  },
+  "include": [
+    "packages/redux-modules/src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.js",
+    "**/*.test.jsx",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
+}

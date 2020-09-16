@@ -13,9 +13,10 @@ async function typesCopy({ from, to }) {
   }
 
   const files = glob.sync('**/*.d.ts', { cwd: from });
-  const cmds = files.map(file =>
-    fse.copy(path.resolve(from, file), path.resolve(to, file))
-  );
+  const cmds = files.map(async file => {
+    await fse.copy(path.resolve(from, file), path.resolve(to, file))
+    await fse.remove(path.resolve(from, file))
+  });
   return Promise.all(cmds);
 }
 
@@ -29,7 +30,7 @@ async function createPackageFile() {
     private: false,
     main: './index.js',
     module: './esm/index.js',
-    typings: './index.d.ts',
+    types: './index.d.ts',
   };
   const targetPath = path.resolve(buildPath, './package.json');
 

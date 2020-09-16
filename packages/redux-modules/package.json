@@ -1,6 +1,6 @@
 {
   "name": "@e-group/redux-modules",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "private": false,
   "author": "eGroup Team",
   "description": "eGroup team react-redux modules that share across projects.",
@@ -35,6 +35,7 @@
   },
   "gitHead": "962c60a7aa37f395e04272ef4ad417cd8fb6af15",
   "peerDependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
@@ -42,7 +43,6 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
-    "@reduxjs/toolkit": "^1.4.0",
     "redux": "^4.0.5"
   },
   "dependencies": {

@@ -1,7 +1,13 @@
 module.exports = function(api) {
   if (api.env(['test'])) {
     return {
-      presets: ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react']
+      // Use ts-jest to instead of @babel/preset-typescript
+      // Read below article for why
+      // https://kulshekhar.github.io/ts-jest/user/babel7-or-ts
+      presets: ['@babel/preset-env', '@babel/preset-react'],
+      plugins: [
+        '@babel/plugin-transform-runtime'
+      ]
     };
   }
 
@@ -12,6 +18,7 @@ module.exports = function(api) {
         {
           // for browserslist in package.json
           useBuiltIns: 'entry',
+          corejs: "3.0.0"
         }
       ],
       '@babel/preset-typescript',
@@ -20,10 +27,15 @@ module.exports = function(api) {
     plugins: [
       // A plugin that enables the re-use of Babel's injected helper code to save on codesize.
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
-      '@babel/plugin-transform-runtime'
+      [
+        '@babel/plugin-transform-runtime',
+        {
+          useESModules: true
+        }
+      ]
     ],
     ignore: [
-      "**/*.test.js",
+      "**/*.test.*",
       "**/*.d.ts"
     ]
   };

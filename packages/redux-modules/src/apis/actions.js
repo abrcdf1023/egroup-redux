@@ -1,4 +1,4 @@
-import { createAction } from 'redux-actions';
+import { createAction } from '@reduxjs/toolkit';
 
 import {
   EG_API_TAKE,
@@ -8,7 +8,7 @@ import {
   EG_API_FAILURE,
   EG_CLEAR_API_RESPONSE,
   EG_CLEAR_APIS_RESPONSE,
-  EG_DESTROY_API
+  EG_DESTROY_API,
 } from './types';
 
 export const egApiTake = createAction(EG_API_TAKE);

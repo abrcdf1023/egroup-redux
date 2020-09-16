@@ -1,4 +1,4 @@
-import { createAction } from 'redux-actions';
+import { createAction } from '@reduxjs/toolkit';
 import { fromJS } from 'immutable';
 import {
   egApiTake,
@@ -8,7 +8,7 @@ import {
   egApiFailure,
   clearApiResponse,
   clearApisResponse,
-  destroyApi
+  destroyApi,
 } from '../../apis';
 import { reducer } from './apis';
 
@@ -25,10 +25,10 @@ describe('apis module reducers', () => {
       components: {
         list: {
           fetchGetMember: {
-            isError: false
-          }
-        }
-      }
+            isError: false,
+          },
+        },
+      },
     });
     expect(reducer(initialState, egApiTake({ leafs }))).toEqual(expectedState);
   });
@@ -38,20 +38,20 @@ describe('apis module reducers', () => {
       components: {
         list: {
           fetchGetMember: {
-            isError: false
-          }
-        }
-      }
+            isError: false,
+          },
+        },
+      },
     });
     const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
             isError: false,
-            isLoading: true
-          }
-        }
-      }
+            isLoading: true,
+          },
+        },
+      },
     });
     expect(reducer(initialState, egApiRequest({ leafs }))).toEqual(
       expectedState
@@ -64,20 +64,20 @@ describe('apis module reducers', () => {
         list: {
           fetchGetMember: {
             isError: false,
-            isLoading: true
-          }
-        }
-      }
+            isLoading: true,
+          },
+        },
+      },
     });
     const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
             isError: false,
-            isLoading: false
-          }
-        }
-      }
+            isLoading: false,
+          },
+        },
+      },
     });
     expect(reducer(initialState, egApiCancel({ leafs }))).toEqual(
       expectedState
@@ -90,13 +90,13 @@ describe('apis module reducers', () => {
         list: {
           fetchGetMember: {
             isError: false,
-            isLoading: true
-          }
-        }
-      }
+            isLoading: true,
+          },
+        },
+      },
     });
     const response = fromJS({
-      data: 'data'
+      data: 'data',
     });
     const expectedState = fromJS({
       components: {
@@ -104,17 +104,17 @@ describe('apis module reducers', () => {
           fetchGetMember: {
             isError: false,
             isLoading: false,
-            response
-          }
-        }
-      }
+            response,
+          },
+        },
+      },
     });
     expect(
       reducer(
         initialState,
         egApiSuccess({
           leafs,
-          response
+          response,
         })
       )
     ).toEqual(expectedState);
@@ -126,26 +126,26 @@ describe('apis module reducers', () => {
         list: {
           fetchGetMember: {
             isError: false,
-            isLoading: true
-          }
-        }
-      }
+            isLoading: true,
+          },
+        },
+      },
     });
     const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
             isError: false,
-            isLoading: false
-          }
-        }
-      }
+            isLoading: false,
+          },
+        },
+      },
     });
     expect(
       reducer(
         initialState,
         egApiSuccess({
-          leafs
+          leafs,
         })
       )
     ).toEqual(expectedState);
@@ -157,10 +157,10 @@ describe('apis module reducers', () => {
         list: {
           fetchGetMember: {
             isError: false,
-            isLoading: true
-          }
-        }
-      }
+            isLoading: true,
+          },
+        },
+      },
     });
     const error = new Error();
     const expectedState = fromJS({
@@ -169,17 +169,17 @@ describe('apis module reducers', () => {
           fetchGetMember: {
             isLoading: false,
             isError: true,
-            error
-          }
-        }
-      }
+            error,
+          },
+        },
+      },
     });
     expect(
       reducer(
         initialState,
         egApiFailure({
           leafs,
-          error
+          error,
         })
       )
     ).toEqual(expectedState);
@@ -191,26 +191,26 @@ describe('apis module reducers', () => {
         list: {
           fetchGetMember: {
             isError: false,
-            isLoading: true
-          }
-        }
-      }
+            isLoading: true,
+          },
+        },
+      },
     });
     const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
             isLoading: false,
-            isError: true
-          }
-        }
-      }
+            isError: true,
+          },
+        },
+      },
     });
     expect(
       reducer(
         initialState,
         egApiFailure({
-          leafs
+          leafs,
         })
       )
     ).toEqual(expectedState);
@@ -225,39 +225,39 @@ describe('apis module reducers', () => {
             isError: false,
             isLoading: false,
             response: {
-              data: 'data'
-            }
-          }
+              data: 'data',
+            },
+          },
         },
         user: {
           fetchGetUser: {
             isError: false,
             isLoading: false,
             response: {
-              data: 'data'
-            }
-          }
-        }
-      }
+              data: 'data',
+            },
+          },
+        },
+      },
     });
     const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
             isError: false,
-            isLoading: false
-          }
+            isLoading: false,
+          },
         },
         user: {
           fetchGetUser: {
             isError: false,
             isLoading: false,
             response: {
-              data: 'data'
-            }
-          }
-        }
-      }
+              data: 'data',
+            },
+          },
+        },
+      },
     });
     expect(reducer(initialState, clearApiResponse(fetchGetMember()))).toEqual(
       expectedState
@@ -273,11 +273,11 @@ describe('apis module reducers', () => {
             isError: false,
             isLoading: false,
             response: {
-              data: 'data'
-            }
-          }
-        }
-      }
+              data: 'data',
+            },
+          },
+        },
+      },
     });
     expect(reducer(initialState, clearApiResponse())).toEqual(initialState);
     expect(reducer(initialState, clearApiResponse(fetchGetMember()))).toEqual(
@@ -295,36 +295,36 @@ describe('apis module reducers', () => {
             isError: false,
             isLoading: false,
             response: {
-              data: 'data'
-            }
-          }
+              data: 'data',
+            },
+          },
         },
         users: {
           fetchGetUser: {
             isError: false,
             isLoading: false,
             response: {
-              data: 'data'
-            }
-          }
-        }
-      }
+              data: 'data',
+            },
+          },
+        },
+      },
     });
     const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
             isError: false,
-            isLoading: false
-          }
+            isLoading: false,
+          },
         },
         users: {
           fetchGetUser: {
             isError: false,
-            isLoading: false
-          }
-        }
-      }
+            isLoading: false,
+          },
+        },
+      },
     });
     expect(
       reducer(
@@ -343,11 +343,11 @@ describe('apis module reducers', () => {
             isError: false,
             isLoading: false,
             response: {
-              data: 'data'
-            }
-          }
-        }
-      }
+              data: 'data',
+            },
+          },
+        },
+      },
     });
     expect(reducer(initialState, clearApisResponse())).toEqual(initialState);
     expect(
@@ -363,11 +363,11 @@ describe('apis module reducers', () => {
             isError: false,
             isLoading: false,
             response: {
-              data: 'data'
-            }
-          }
-        }
-      }
+              data: 'data',
+            },
+          },
+        },
+      },
     });
     expect(reducer(initialState, destroyApi())).toEqual(initialState);
     expect(reducer(initialState, destroyApi(['components', 'test']))).toEqual(
@@ -376,8 +376,8 @@ describe('apis module reducers', () => {
     expect(reducer(initialState, destroyApi(['components', 'list']))).toEqual(
       fromJS({
         components: {
-          list: {}
-        }
+          list: {},
+        },
       })
     );
   });

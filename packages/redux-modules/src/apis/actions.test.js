@@ -1,4 +1,4 @@
-import { createAction } from 'redux-actions';
+import { createAction } from '@reduxjs/toolkit';
 
 import {
   EG_API_TAKE,
@@ -8,7 +8,7 @@ import {
   EG_API_FAILURE,
   EG_CLEAR_API_RESPONSE,
   EG_CLEAR_APIS_RESPONSE,
-  EG_DESTROY_API
+  EG_DESTROY_API,
 } from './types';
 import {
   egApiTake,
@@ -18,7 +18,7 @@ import {
   egApiFailure,
   clearApiResponse,
   clearApisResponse,
-  destroyApi
+  destroyApi,
 } from './actions';
 
 const leafs = ['components', 'list', 'fetchGetMember'];
@@ -27,7 +27,7 @@ describe('apis module actions', () => {
   it('should create an action to take api', () => {
     const expectedAction = {
       type: EG_API_TAKE,
-      payload: { leafs }
+      payload: { leafs },
     };
     expect(egApiTake({ leafs })).toEqual(expectedAction);
   });
@@ -35,7 +35,7 @@ describe('apis module actions', () => {
   it('should create an action to request api', () => {
     const expectedAction = {
       type: EG_API_REQUEST,
-      payload: { leafs }
+      payload: { leafs },
     };
     expect(egApiRequest({ leafs })).toEqual(expectedAction);
   });
@@ -43,18 +43,18 @@ describe('apis module actions', () => {
   it('should create an action to cancel api', () => {
     const expectedAction = {
       type: EG_API_CANCEL,
-      payload: { leafs }
+      payload: { leafs },
     };
     expect(egApiCancel({ leafs })).toEqual(expectedAction);
   });
 
   it('should create an action to handle api success with response', () => {
     const response = {
-      data: 'data'
+      data: 'data',
     };
     const expectedAction = {
       type: EG_API_SUCCESS,
-      payload: { leafs, response }
+      payload: { leafs, response },
     };
     expect(egApiSuccess({ leafs, response })).toEqual(expectedAction);
   });
@@ -62,7 +62,7 @@ describe('apis module actions', () => {
   it('should create an action to handle api success without response', () => {
     const expectedAction = {
       type: EG_API_SUCCESS,
-      payload: { leafs }
+      payload: { leafs },
     };
     expect(egApiSuccess({ leafs })).toEqual(expectedAction);
   });
@@ -71,7 +71,7 @@ describe('apis module actions', () => {
     const error = new Error();
     const expectedAction = {
       type: EG_API_FAILURE,
-      payload: { leafs, error }
+      payload: { leafs, error },
     };
     expect(egApiFailure({ leafs, error })).toEqual(expectedAction);
   });
@@ -79,7 +79,7 @@ describe('apis module actions', () => {
   it('should create an action to handle api without error', () => {
     const expectedAction = {
       type: EG_API_FAILURE,
-      payload: { leafs }
+      payload: { leafs },
     };
     expect(egApiFailure({ leafs })).toEqual(expectedAction);
   });
@@ -89,7 +89,7 @@ describe('apis module actions', () => {
     // single
     const expectedAction = {
       type: EG_CLEAR_API_RESPONSE,
-      payload: fetchGetMember()
+      payload: fetchGetMember(),
     };
     expect(clearApiResponse(fetchGetMember())).toEqual(expectedAction);
   });
@@ -100,7 +100,7 @@ describe('apis module actions', () => {
     // multiple
     const expectedAction = {
       type: EG_CLEAR_APIS_RESPONSE,
-      payload: [fetchGetMember(), fetchGetUser()]
+      payload: [fetchGetMember(), fetchGetUser()],
     };
     expect(clearApisResponse([fetchGetMember(), fetchGetUser()])).toEqual(
       expectedAction
@@ -111,7 +111,7 @@ describe('apis module actions', () => {
     // multiple
     const expectedAction = {
       type: EG_DESTROY_API,
-      payload: ['components', 'fetchGet']
+      payload: ['components', 'fetchGet'],
     };
     expect(destroyApi(['components', 'fetchGet'])).toEqual(expectedAction);
   });

@@ -3,7 +3,7 @@ import {
   egApiRequest,
   egApiCancel,
   egApiSuccess,
-  egApiFailure
+  egApiFailure,
 } from '../apis/actions';
 import { camalize, getApiInfos, trimLeafs, findFetchIndex } from '../utils';
 
@@ -11,13 +11,12 @@ import { camalize, getApiInfos, trimLeafs, findFetchIndex } from '../utils';
  * Use to dispatch fetch actions automatically.
  */
 function createHandleApisMiddleware() {
-  return ({ dispatch, getState }) => next => action => {
+  return ({ dispatch, getState }) => (next) => (action) => {
     const isObject = typeof action === 'object' && !Array.isArray(action);
-    if (isObject) {
+    if (isObject && action.type && typeof action.type === 'string') {
       if (
-        action.type &&
-        typeof action.type === 'string' &&
-        action.type.indexOf('FETCH') !== -1
+        action.type.indexOf('FETCH') !== -1 ||
+        action.type.indexOf('fetch') !== -1
       ) {
         const leafs = camalize(action.type).split('/');
         const fetchIndex = findFetchIndex(leafs);
@@ -36,7 +35,7 @@ function createHandleApisMiddleware() {
           dispatch(
             egApiSuccess({
               leafs: trimedLeafs,
-              response: action.payload
+              response: action.payload,
             })
           );
         }
@@ -44,7 +43,7 @@ function createHandleApisMiddleware() {
           dispatch(
             egApiFailure({
               leafs: trimedLeafs,
-              error: action.payload
+              error: action.payload,
             })
           );
         }

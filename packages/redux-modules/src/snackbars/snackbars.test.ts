@@ -22,7 +22,6 @@ describe('snackbar reducers', () => {
     };
     expect(reducer(state, initializeSnackbar(name))).toEqual(initializeState);
     expect(reducer(state, initializeSnackbar())).toEqual(state);
-    expect(reducer(state, initializeSnackbar({}))).toEqual(state);
     expect(reducer(initializeState, initializeSnackbar(name))).toEqual(
       initializeState
     );
@@ -40,7 +39,6 @@ describe('snackbar reducers', () => {
       },
     });
     expect(reducer(state, openSnackbar())).toEqual(state);
-    expect(reducer(state, openSnackbar({}))).toEqual(state);
     expect(reducer({}, openSnackbar(name))).toEqual({});
   });
 
@@ -56,7 +54,6 @@ describe('snackbar reducers', () => {
       },
     });
     expect(reducer(state, closeSnackbar())).toEqual(state);
-    expect(reducer(state, closeSnackbar({}))).toEqual(state);
     expect(reducer({}, closeSnackbar(name))).toEqual({});
   });
 
@@ -83,7 +80,7 @@ describe('snackbar reducers', () => {
       },
     });
     expect(reducer(state, setSnackbarData())).toEqual(state);
-    expect(reducer(state, setSnackbarData('foo'))).toEqual(state);
+    expect(reducer(state, setSnackbarData({}))).toEqual(state);
     expect(
       reducer(
         {},

@@ -1,7 +1,6 @@
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
-import { createActions } from 'redux-actions';
-import { Map } from 'immutable';
+import { createAction } from '@reduxjs/toolkit';
 import fetchMock from 'fetch-mock';
 import createHandleApisMiddleware from './createHandleApisMiddleware';
 import {
@@ -14,25 +13,19 @@ import {
 
 const mockStore = configureStore([createHandleApisMiddleware(), thunk]);
 
-const actionCreator = createActions({
-  COMPONENTS: {
-    LIST: {
-      FETCH_GET_MEMBER: undefined,
-      FETCH_GET_MEMBER_REQUEST: undefined,
-      FETCH_GET_MEMBER_CANCEL: undefined,
-      FETCH_GET_MEMBER_SUCCESS: undefined,
-      FETCH_GET_MEMBER_FAILURE: undefined,
-    },
-  },
-});
-
-const {
-  fetchGetMember,
-  fetchGetMemberRequest,
-  fetchGetMemberCancel,
-  fetchGetMemberSuccess,
-  fetchGetMemberFailure,
-} = actionCreator.components.list;
+const fetchGetMember = createAction('components/list/fetchGetMember');
+const fetchGetMemberRequest = createAction(
+  'components/list/fetchGetMemberRequest'
+);
+const fetchGetMemberCancel = createAction(
+  'components/list/fetchGetMemberCancel'
+);
+const fetchGetMemberSuccess = createAction(
+  'components/list/fetchGetMemberSuccess'
+);
+const fetchGetMemberFailure = createAction(
+  'components/list/fetchGetMemberFailure'
+);
 
 describe('createHandleApisMiddleware', () => {
   afterEach(() => {
@@ -40,7 +33,7 @@ describe('createHandleApisMiddleware', () => {
   });
 
   it('should dispatch none fetch action', () => {
-    const store = mockStore(Map());
+    const store = mockStore({});
     store.dispatch({
       type: 'CLOSE_WINDOW',
     });
@@ -54,7 +47,7 @@ describe('createHandleApisMiddleware', () => {
   });
 
   it('should dispatch egApiTake', () => {
-    const store = mockStore(Map());
+    const store = mockStore({});
     store.dispatch(fetchGetMember());
     const actions = store.getActions();
     const expected = [
@@ -70,7 +63,7 @@ describe('createHandleApisMiddleware', () => {
   });
 
   it('should dispatch egApiRequest', () => {
-    const store = mockStore(Map());
+    const store = mockStore({});
     store.dispatch(fetchGetMemberRequest());
     const actions = store.getActions();
     const expected = [
@@ -86,7 +79,7 @@ describe('createHandleApisMiddleware', () => {
   });
 
   it('should dispatch egApiCancel', () => {
-    const store = mockStore(Map());
+    const store = mockStore({});
     store.dispatch(fetchGetMemberCancel());
     const actions = store.getActions();
     const expected = [
@@ -102,7 +95,7 @@ describe('createHandleApisMiddleware', () => {
   });
 
   it('should dispatch egApiSuccess', () => {
-    const store = mockStore(Map());
+    const store = mockStore({});
     store.dispatch(fetchGetMemberSuccess());
     const actions = store.getActions();
     const expected = [
@@ -118,7 +111,7 @@ describe('createHandleApisMiddleware', () => {
   });
 
   it('should dispatch egApiFailure', () => {
-    const store = mockStore(Map());
+    const store = mockStore({});
     store.dispatch(fetchGetMemberFailure());
     const actions = store.getActions();
     const expected = [
@@ -136,7 +129,7 @@ describe('createHandleApisMiddleware', () => {
   it('should fetch member success', () => {
     return new Promise((resolve) => {
       const data = { memberId: 11111 };
-      const store = mockStore(Map());
+      const store = mockStore({});
       const expectedActions = [
         {
           type: EG_API_TAKE,
@@ -178,7 +171,7 @@ describe('createHandleApisMiddleware', () => {
 
   it('should fetch member failure', () => {
     return new Promise((resolve) => {
-      const store = mockStore(Map());
+      const store = mockStore({});
       const expectedActions = [
         {
           type: EG_API_TAKE,

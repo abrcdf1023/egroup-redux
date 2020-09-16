@@ -36,9 +36,7 @@ describe('entities reducers', () => {
 
   it('should handle SET_ENTITIES without any change', () => {
     expect(reducer({}, setEntities())).toEqual({});
-    expect(reducer({}, setEntities(10))).toEqual({});
-    expect(reducer({}, setEntities([]))).toEqual({});
-    expect(reducer({}, setEntities('foo'))).toEqual({});
+    expect(reducer({}, setEntities({}))).toEqual({});
   });
 
   it('should handle SET_ENTITIES with meta', () => {
@@ -73,9 +71,7 @@ describe('entities reducers', () => {
 
   it('should handle SET_ENTITIES_SHALLOW without any change', () => {
     expect(reducer({}, setEntitiesShallow())).toEqual({});
-    expect(reducer({}, setEntitiesShallow(10))).toEqual({});
-    expect(reducer({}, setEntitiesShallow([]))).toEqual({});
-    expect(reducer({}, setEntitiesShallow('foo'))).toEqual({});
+    expect(reducer({}, setEntitiesShallow({}))).toEqual({});
   });
 
   it('should handle SET_ENTITIES_SHALLOW with meta', () => {

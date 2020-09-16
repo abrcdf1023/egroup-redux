@@ -5,7 +5,7 @@ import { initializeSnackbar, closeSnackbar } from '../../snackbars/actions';
 import { getSnackbarStates } from './selectors';
 
 interface OwnProps {
-  onClose: (event: any) => void;
+  handleClose: () => void;
 }
 
 interface DispatchProps {
@@ -39,20 +39,19 @@ const withReduxSnackbar = (name: string) => <T, OriginalProps extends {}>(
       const {
         forwardedRef,
         initializeSnackbar,
-        onClose,
+        handleClose,
         closeSnackbar,
         ...other
       } = this.props;
 
-      const handleClose = (e: any) => {
-        if (onClose) {
-          onClose(e);
-        }
-        this.props.closeSnackbar(name);
-      };
-
       return (
-        <WrappedComponent ref={forwardedRef} onClose={handleClose} {...other} />
+        <WrappedComponent
+          ref={forwardedRef}
+          handleClose={() => {
+            closeSnackbar(name);
+          }}
+          {...other}
+        />
       );
     }
   }

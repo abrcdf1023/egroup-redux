@@ -19,7 +19,7 @@ function merger(a, b) {
 /**
  * Reducer
  */
-export const reducer = handleActions(
+export const entities = handleActions(
   {
     [SET_ENTITIES]: produce((draft, action) => {
       if (!action.payload) return;
@@ -76,7 +76,7 @@ export const reducer = handleActions(
         }
         assign(draft, action.payload);
       }
-    })
+    }),
   },
   {}
 );

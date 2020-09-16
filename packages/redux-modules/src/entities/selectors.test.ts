@@ -8,17 +8,17 @@ const defaultEntities = {
       roles: {
         admin: {
           roleName: 'admin',
-          roleStatus: 'checked'
-        }
-      }
-    }
-  }
+          roleStatus: 'checked',
+        },
+      },
+    },
+  },
 };
 
 describe('entities selectors', () => {
   const rootStates = defaultEntities;
   const state = {
-    entities: defaultEntities
+    entities: defaultEntities,
   };
   it('should get entities', () => {
     expect(getEntities(state)).toEqual(rootStates);

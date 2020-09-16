@@ -1,11 +1,11 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import {
   setEntities,
   setEntitiesShallow,
   setEntitiesArrayConcat,
-  deleteEntitiesIn
+  deleteEntitiesIn,
 } from '../../entities';
-import { reducer } from './entities';
+import { entities as reducer } from './entities';
 
 const defaultEntities = {
   users: {
@@ -15,25 +15,27 @@ const defaultEntities = {
       roles: {
         admin: {
           roleName: 'admin',
-          roleStatus: 'checked'
-        }
-      }
-    }
-  }
+          roleStatus: 'checked',
+        },
+      },
+    },
+  },
 };
 const entities = {
   users: {
     1: {
       id: '1',
       name: 'Jerry',
-      roles: {}
-    }
-  }
+      roles: {},
+    },
+  },
 };
 
 describe('entities reducers', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual(fromJS({}));
+    expect(reducer(undefined, { type: '', payload: Map({}) })).toEqual(
+      fromJS({})
+    );
   });
 
   it('should handle SET_ENTITIES', () => {
@@ -51,7 +53,7 @@ describe('entities reducers', () => {
       reducer(
         fromJS({}),
         setEntities(fromJS(entities.users), {
-          path: ['users']
+          path: ['users'],
         })
       )
     ).toEqual(fromJS(entities));
@@ -60,7 +62,7 @@ describe('entities reducers', () => {
       reducer(
         fromJS(defaultEntities),
         setEntities(fromJS(entities.users), {
-          path: ['users']
+          path: ['users'],
         })
       )
     ).toEqual(fromJS(defaultEntities));
@@ -87,7 +89,7 @@ describe('entities reducers', () => {
       reducer(
         fromJS({}),
         setEntitiesShallow(fromJS(entities.users), {
-          path: ['users']
+          path: ['users'],
         })
       )
     ).toEqual(fromJS(entities));
@@ -98,12 +100,12 @@ describe('entities reducers', () => {
           users: {
             1: {
               id: '1',
-              name: 'Leo'
-            }
-          }
+              name: 'Leo',
+            },
+          },
         }),
         setEntitiesShallow(fromJS(entities.users), {
-          path: ['users']
+          path: ['users'],
         })
       )
     ).toEqual(fromJS(entities));
@@ -130,7 +132,7 @@ describe('entities reducers', () => {
       reducer(
         fromJS({}),
         setEntitiesArrayConcat(fromJS(entities.users), {
-          path: ['users']
+          path: ['users'],
         })
       )
     ).toEqual(fromJS(entities));
@@ -139,7 +141,7 @@ describe('entities reducers', () => {
       reducer(
         fromJS(defaultEntities),
         setEntitiesArrayConcat(fromJS(entities.users), {
-          path: ['users']
+          path: ['users'],
         })
       )
     ).toEqual(fromJS(defaultEntities));
@@ -156,22 +158,22 @@ describe('entities reducers', () => {
       reducer(
         fromJS({
           foo: {
-            bar: ['a', 'b', 'c', 'd']
-          }
+            bar: ['a', 'b', 'c', 'd'],
+          },
         }),
         setEntitiesArrayConcat(
           fromJS({
             foo: {
-              bar: ['d', 'e', 'f']
-            }
+              bar: ['d', 'e', 'f'],
+            },
           })
         )
       )
     ).toEqual(
       fromJS({
         foo: {
-          bar: ['a', 'b', 'c', 'd', 'd', 'e', 'f']
-        }
+          bar: ['a', 'b', 'c', 'd', 'd', 'e', 'f'],
+        },
       })
     );
   });

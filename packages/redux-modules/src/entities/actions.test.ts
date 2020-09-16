@@ -6,16 +6,16 @@ const entities = {
     1: {
       id: '1',
       name: 'Jerry',
-      roles: {}
-    }
-  }
+      roles: {},
+    },
+  },
 };
 
 describe('entities actions', () => {
   it('should create an action to set entities', () => {
     const expectedAction = {
       type: SET_ENTITIES,
-      payload: entities
+      payload: entities,
     };
     expect(setEntities(entities)).toEqual(expectedAction);
   });
@@ -25,12 +25,12 @@ describe('entities actions', () => {
       type: SET_ENTITIES,
       payload: entities.users,
       meta: {
-        path: ['users']
-      }
+        path: ['users'],
+      },
     };
     expect(
       setEntities(entities.users, {
-        path: ['users']
+        path: ['users'],
       })
     ).toEqual(expectedAction);
   });
@@ -38,7 +38,7 @@ describe('entities actions', () => {
   it('should create an action to set entities shallow', () => {
     const expectedAction = {
       type: SET_ENTITIES_SHALLOW,
-      payload: entities
+      payload: entities,
     };
     expect(setEntitiesShallow(entities)).toEqual(expectedAction);
   });
@@ -48,12 +48,12 @@ describe('entities actions', () => {
       type: SET_ENTITIES_SHALLOW,
       payload: entities.users,
       meta: {
-        path: ['users']
-      }
+        path: ['users'],
+      },
     };
     expect(
       setEntitiesShallow(entities.users, {
-        path: ['users']
+        path: ['users'],
       })
     ).toEqual(expectedAction);
   });

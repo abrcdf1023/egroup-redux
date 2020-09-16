@@ -1,5 +1,5 @@
 import { setEntities, setEntitiesShallow } from './actions';
-import { reducer } from './entities';
+import { entities as reducer } from './entities';
 
 const defaultEntities = {
   users: {
@@ -9,25 +9,25 @@ const defaultEntities = {
       roles: {
         admin: {
           roleName: 'admin',
-          roleStatus: 'checked'
-        }
-      }
-    }
-  }
+          roleStatus: 'checked',
+        },
+      },
+    },
+  },
 };
 const entities = {
   users: {
     1: {
       id: '1',
       name: 'Jerry',
-      roles: {}
-    }
-  }
+      roles: {},
+    },
+  },
 };
 
 describe('entities reducers', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual({});
+    expect(reducer(undefined, { type: '', payload: {} })).toEqual({});
   });
 
   it('should handle SET_ENTITIES', () => {
@@ -46,7 +46,7 @@ describe('entities reducers', () => {
       reducer(
         {},
         setEntities(entities.users, {
-          path: ['users']
+          path: ['users'],
         })
       )
     ).toEqual(entities);
@@ -55,7 +55,7 @@ describe('entities reducers', () => {
       reducer(
         defaultEntities,
         setEntities(entities.users, {
-          path: ['users']
+          path: ['users'],
         })
       )
     ).toEqual(defaultEntities);
@@ -83,7 +83,7 @@ describe('entities reducers', () => {
       reducer(
         {},
         setEntitiesShallow(entities.users, {
-          path: ['users']
+          path: ['users'],
         })
       )
     ).toEqual(entities);
@@ -94,12 +94,12 @@ describe('entities reducers', () => {
           users: {
             1: {
               id: '1',
-              name: 'Leo'
-            }
-          }
+              name: 'Leo',
+            },
+          },
         },
         setEntitiesShallow(entities.users, {
-          path: ['users']
+          path: ['users'],
         })
       )
     ).toEqual(entities);

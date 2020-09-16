@@ -1,3 +1,4 @@
+import { Middleware } from 'redux';
 import {
   egApiTake,
   egApiRequest,
@@ -10,8 +11,8 @@ import { camalize, getApiInfos, trimLeafs, findFetchIndex } from '../utils';
 /**
  * Use to dispatch fetch actions automatically.
  */
-function createHandleApisMiddleware() {
-  return ({ dispatch, getState }) => (next) => (action) => {
+function createHandleApisMiddleware(): Middleware {
+  return ({ dispatch }) => (next) => (action) => {
     const isObject = typeof action === 'object' && !Array.isArray(action);
     if (isObject && action.type && typeof action.type === 'string') {
       if (

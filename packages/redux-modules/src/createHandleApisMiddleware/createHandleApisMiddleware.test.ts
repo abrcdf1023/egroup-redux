@@ -20,10 +20,10 @@ const fetchGetMemberRequest = createAction(
 const fetchGetMemberCancel = createAction(
   'components/list/fetchGetMemberCancel'
 );
-const fetchGetMemberSuccess = createAction(
+const fetchGetMemberSuccess = createAction<Record<string, unknown> | undefined>(
   'components/list/fetchGetMemberSuccess'
 );
-const fetchGetMemberFailure = createAction(
+const fetchGetMemberFailure = createAction<Error | undefined>(
   'components/list/fetchGetMemberFailure'
 );
 

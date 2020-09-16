@@ -22,7 +22,7 @@ const initialState = {};
 /**
  * Reducer
  */
-export const reducer = createReducer(initialState, {
+export const apis = createReducer(initialState, {
   [EG_API_TAKE]: produce((draft, action) => {
     setIn(draft, [...action.payload.leafs, 'isError'], false);
   }),
@@ -79,7 +79,7 @@ export const reducer = createReducer(initialState, {
       );
       return;
     }
-    const actionTypes = [];
+    const actionTypes: string[] = [];
     for (let i = 0; i < action.payload.length; i++) {
       const actionType = action.payload[i].type;
       if (typeof actionType !== 'string') {

@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import { fromJS } from 'immutable';
 import {
   egApiTake,
   egApiRequest,
@@ -8,19 +9,19 @@ import {
   clearApiResponse,
   clearApisResponse,
   destroyApi,
-} from './actions';
-import { reducer } from './apis';
+} from '../../apis';
+import { apis as reducer } from './apis';
 
 const leafs = ['components', 'list', 'fetchGetMember'];
 
 describe('apis module reducers', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual({});
+    expect(reducer(undefined, { type: '', payload: {} })).toEqual(fromJS({}));
   });
 
   it('should handle EG_API_TAKE', () => {
-    const initialState = {};
-    const expectedState = {
+    const initialState = fromJS({});
+    const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -28,12 +29,12 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(reducer(initialState, egApiTake({ leafs }))).toEqual(expectedState);
   });
 
   it('should handle EG_API_REQUEST', () => {
-    const initialState = {
+    const initialState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -41,8 +42,8 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
-    const expectedState = {
+    });
+    const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -51,14 +52,14 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(reducer(initialState, egApiRequest({ leafs }))).toEqual(
       expectedState
     );
   });
 
   it('should handle EG_API_CANCEL', () => {
-    const initialState = {
+    const initialState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -67,8 +68,8 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
-    const expectedState = {
+    });
+    const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -77,14 +78,14 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(reducer(initialState, egApiCancel({ leafs }))).toEqual(
       expectedState
     );
   });
 
   it('should handle EG_API_SUCCESS with response', () => {
-    const initialState = {
+    const initialState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -93,11 +94,11 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
-    const response = {
+    });
+    const response = fromJS({
       data: 'data',
-    };
-    const expectedState = {
+    });
+    const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -107,7 +108,7 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(
       reducer(
         initialState,
@@ -120,7 +121,7 @@ describe('apis module reducers', () => {
   });
 
   it('should handle EG_API_SUCCESS without response', () => {
-    const initialState = {
+    const initialState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -129,8 +130,8 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
-    const expectedState = {
+    });
+    const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -139,7 +140,7 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(
       reducer(
         initialState,
@@ -151,7 +152,7 @@ describe('apis module reducers', () => {
   });
 
   it('should handle EG_API_FAILURE with error object', () => {
-    const initialState = {
+    const initialState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -160,9 +161,9 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     const error = new Error();
-    const expectedState = {
+    const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -172,7 +173,7 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(
       reducer(
         initialState,
@@ -185,7 +186,7 @@ describe('apis module reducers', () => {
   });
 
   it('should handle EG_API_FAILURE without error object', () => {
-    const initialState = {
+    const initialState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -194,8 +195,8 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
-    const expectedState = {
+    });
+    const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -204,7 +205,7 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(
       reducer(
         initialState,
@@ -217,7 +218,7 @@ describe('apis module reducers', () => {
 
   it('should handle EG_CLEAR_API_RESPONSE with single action', () => {
     const fetchGetMember = createAction('COMPONENTS/LIST/FETCH_GET_MEMBER');
-    const initialState = {
+    const initialState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -238,8 +239,8 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
-    const expectedState = {
+    });
+    const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -257,15 +258,14 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(reducer(initialState, clearApiResponse(fetchGetMember()))).toEqual(
       expectedState
     );
   });
 
   it('should handle EG_CLEAR_API_RESPONSE without any change', () => {
-    const fetchGetMember = () => ({});
-    const initialState = {
+    const initialState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -277,17 +277,14 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(reducer(initialState, clearApiResponse())).toEqual(initialState);
-    expect(reducer(initialState, clearApiResponse(fetchGetMember()))).toEqual(
-      initialState
-    );
   });
 
   it('should handle EG_CLEAR_APIS_RESPONSE with multiple actions', () => {
     const fetchGetMember = createAction('COMPONENTS/LIST/FETCH_GET_MEMBER');
     const fetchGetUser = createAction('COMPONENTS/USERS/FETCH_GET_USER');
-    const initialState = {
+    const initialState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -308,8 +305,8 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
-    const expectedState = {
+    });
+    const expectedState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -324,7 +321,7 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(
       reducer(
         initialState,
@@ -334,8 +331,7 @@ describe('apis module reducers', () => {
   });
 
   it('should handle EG_CLEAR_APIS_RESPONSE without any change', () => {
-    const fetchGetMember = () => ({});
-    const initialState = {
+    const initialState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -347,15 +343,12 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(reducer(initialState, clearApisResponse())).toEqual(initialState);
-    expect(
-      reducer(initialState, clearApisResponse([fetchGetMember()]))
-    ).toEqual(initialState);
   });
 
   it('should handle EG_DESTROY_API', () => {
-    const initialState = {
+    const initialState = fromJS({
       components: {
         list: {
           fetchGetMember: {
@@ -367,15 +360,17 @@ describe('apis module reducers', () => {
           },
         },
       },
-    };
+    });
     expect(reducer(initialState, destroyApi())).toEqual(initialState);
     expect(reducer(initialState, destroyApi(['components', 'test']))).toEqual(
       initialState
     );
-    expect(reducer(initialState, destroyApi(['components', 'list']))).toEqual({
-      components: {
-        list: {},
-      },
-    });
+    expect(reducer(initialState, destroyApi(['components', 'list']))).toEqual(
+      fromJS({
+        components: {
+          list: {},
+        },
+      })
+    );
   });
 });
